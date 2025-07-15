@@ -5,6 +5,9 @@ This is a ast-grep based cmake linter repository. See https://ast-grep.github.io
 ### Required Before Each Commit
 - Run `pre-commit install; pre-commit run --all-files` before committing any changes to ensure proper code formatting
 - This will run various hooks on all files to maintain consistent style
+- Follow conventional commits format for commit messages: `type(scope): description`
+  - Common types: feat, fix, docs, style, refactor, test, chore
+  - Example: `docs: update README with installation instructions`
 
 ### Development Flow
 - Test: `ast-grep test`
