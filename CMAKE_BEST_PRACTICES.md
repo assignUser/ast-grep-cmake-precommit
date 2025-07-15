@@ -43,7 +43,7 @@ Variables should be used sparingly in general CMake code. They are appropriate i
 **✅ Good:**
 ```cmake
 # Direct specification of sources
-add_library(connector 
+add_library(connector
     src/connection.cpp
     src/protocol.cpp
     src/handler.cpp
@@ -57,7 +57,7 @@ add_library(connector ${CONNECTOR_SOURCES})
 **❌ Bad:**
 ```cmake
 # Using variables unnecessarily
-set(CONNECTOR_SRCS 
+set(CONNECTOR_SRCS
     src/connection.cpp
     src/protocol.cpp
     src/handler.cpp
@@ -99,17 +99,17 @@ Set all compilation and linking properties directly on targets using target-spec
 add_library(mylib src/lib.cpp)
 
 # Set properties specifically for this target
-target_include_directories(mylib 
+target_include_directories(mylib
     PUBLIC include
     PRIVATE src/internal
 )
 
-target_compile_definitions(mylib 
+target_compile_definitions(mylib
     PUBLIC MYLIB_API_VERSION=2
     PRIVATE MYLIB_INTERNAL_DEBUG
 )
 
-target_compile_options(mylib PRIVATE 
+target_compile_options(mylib PRIVATE
     $<$<CXX_COMPILER_ID:GNU>:-Wall -Wextra>
     $<$<CXX_COMPILER_ID:MSVC>:/W4>
 )
@@ -200,18 +200,18 @@ target_link_libraries(mylib core utils header_only_lib)
 add_library(json_parser src/parser.cpp)
 
 # Private dependencies (implementation details)
-target_link_libraries(json_parser PRIVATE 
+target_link_libraries(json_parser PRIVATE
     internal_string_utils
     platform_specific_libs
 )
 
 # Public dependencies (part of the API)
-target_link_libraries(json_parser PUBLIC 
+target_link_libraries(json_parser PUBLIC
     json_types  # Used in public headers
 )
 
 # Interface dependencies (header-only, passed to consumers)
-target_link_libraries(json_parser INTERFACE 
+target_link_libraries(json_parser INTERFACE
     header_only_json_traits
 )
 ```
@@ -236,7 +236,7 @@ target_link_libraries(myapp PRIVATE
 ```cmake
 add_executable(myapp src/main.cpp)
 
-# Only linking to core_lib but relying on it to transitively 
+# Only linking to core_lib but relying on it to transitively
 # provide logging_lib and config_parser
 target_link_libraries(myapp PRIVATE my_core_lib)
 ```
@@ -286,13 +286,13 @@ Use target-specific include directories with appropriate scopes.
 
 **✅ Good:**
 ```cmake
-add_library(mylib 
+add_library(mylib
     src/implementation.cpp
     src/internal.cpp
 )
 
 target_include_directories(mylib
-    PUBLIC 
+    PUBLIC
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
         $<INSTALL_INTERFACE:include>
     PRIVATE
@@ -305,7 +305,7 @@ target_include_directories(mylib
 # Global include affects all targets
 include_directories(include src)
 
-add_library(mylib 
+add_library(mylib
     src/implementation.cpp
     src/internal.cpp
 )
@@ -407,7 +407,7 @@ endif()
 find_package(GTest REQUIRED)
 
 add_executable(unit_tests test_main.cpp test_core.cpp)
-target_link_libraries(unit_tests PRIVATE 
+target_link_libraries(unit_tests PRIVATE
     mylib
     GTest::gtest
     GTest::gtest_main
