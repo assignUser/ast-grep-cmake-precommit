@@ -1,0 +1,23 @@
+name: "Copilot Setup Steps"
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+  pull_request:
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
+permissions: {}
+jobs:
+  copilot-setup-steps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+
+      - name: Install Dependencies
+        run: |
+          pipx install pre-commit uv ast-grep-cli
+
+      - name: Test Dependencies
+        run: |
+          ast-grep --help

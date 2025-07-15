@@ -1,0 +1,6 @@
+ruleDirs:
+  - /home/jwj/code/cmake-linter/rules
+testConfigs:
+  - testDir: /home/jwj/code/cmake-linter/rules-test
+utilDirs:
+  - /home/jwj/code/cmake-linter/utils
