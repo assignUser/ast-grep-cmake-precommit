@@ -5,11 +5,28 @@ This is a ast-grep based cmake linter repository. See https://ast-grep.github.io
 ### Required Before Each Commit
 - Run `pre-commit install; pre-commit run --all-files` before committing any changes to ensure proper code formatting
 - This will run various hooks on all files to maintain consistent style
+- Follow conventional commits format for commit messages: `type: description` or `type(scope): description` (where `scope` is optional)
+  - Common types: feat, fix, docs, style, refactor, test, chore
+  - Example: `docs: update README with installation instructions`
 
 ### Development Flow
 - Test: `ast-grep test`
 
 ## Repository Structure
+
+This repository follows the standard ast-grep project layout for linting CMake files:
+
+- `rules/` - Contains ast-grep rule definitions written in YAML format that define the linting patterns for CMake code
+- `rules-test/` - Contains test files and snapshots that validate the behavior of the rules in the `rules/` directory
+- `utils/` - Contains utility functions and helper patterns that can be reused across multiple rules
+- `sgconfig.yml` - Main ast-grep configuration file that specifies the project structure and settings
+- `.github/` - GitHub-specific configuration including workflows and this instructions file
+- `.pre-commit-config.yaml` - Pre-commit hooks configuration for code quality enforcement
+
+The project uses ast-grep's default directory conventions where:
+- Rules are automatically discovered from the `rules/` directory
+- Tests are run against files in the `rules-test/` directory 
+- Utilities in `utils/` can be imported and used within rule definitions
 
 ## Key Guidelines
 CRITICAL: NEVER USE --no-verify WHEN COMMITTING CODE
