@@ -25,7 +25,7 @@ This repository follows the standard ast-grep project layout for linting CMake f
 
 The project uses ast-grep's default directory conventions where:
 - Rules are automatically discovered from the `rules/` directory
-- Tests are run against files in the `rules-test/` directory 
+- Tests are run against files in the `rules-test/` directory
 - Utilities in `utils/` can be imported and used within rule definitions
 
 ## Key Guidelines
