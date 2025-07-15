@@ -11,6 +11,7 @@ This is a ast-grep based cmake linter repository. See https://ast-grep.github.io
 
 ### Development Flow
 - Test: `ast-grep test`
+- Once you have executed your plan mark your PR as ready for review.
 
 ## Repository Structure
 

@@ -1,6 +1,11 @@
 name: "Copilot Setup Steps"
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/copilot-setup-steps.yml
   pull_request:
     paths:
       - .github/workflows/copilot-setup-steps.yml
@@ -23,6 +28,7 @@ jobs:
       - name: Install Dependencies
         run: |
           pipx install pre-commit uv ast-grep-cli
+          npm install -g tree-sitter-cli
 
       - name: Test Dependencies
         run: |
