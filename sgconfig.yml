@@ -1,6 +1,6 @@
 ruleDirs:
-  - /home/jwj/code/cmake-linter/rules
+  - rules
 testConfigs:
-  - testDir: /home/jwj/code/cmake-linter/rules-test
+  - testDir: rules-test
 utilDirs:
-  - /home/jwj/code/cmake-linter/utils
+  - utils
