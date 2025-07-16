@@ -40,5 +40,4 @@ jobs:
       - name: Test Dependencies
         run: |
           ast-grep --help
-          pre-commit install
-          pre-commit install-hooks
+          pre-commit install --install-hooks
