@@ -1,0 +1,40 @@
+id: cmake-minimum-version-info
+valid:
+  # Good practices that should NOT trigger the rule (>= 3.15 or < 3.10)
+  - |
+    cmake_minimum_required(VERSION 3.15)
+  - |
+    cmake_minimum_required(VERSION 3.20)
+  - |
+    cmake_minimum_required(VERSION 3.25)
+  - |
+    cmake_minimum_required(VERSION 4.0)
+  - |
+    # Very old versions are handled by error rule, not this one
+    cmake_minimum_required(VERSION 2.8)
+  - |
+    cmake_minimum_required(VERSION 3.5)
+  - |
+    # Comments should not trigger
+    # Ideally use cmake_minimum_required(VERSION 3.15)
+    cmake_minimum_required(VERSION 3.20)
+invalid:
+  # These should trigger the rule - versions 3.10-3.14 (inclusive)
+  - |
+    cmake_minimum_required(VERSION 3.10)
+  - |
+    cmake_minimum_required(VERSION 3.11)
+  - |
+    cmake_minimum_required(VERSION 3.12)
+  - |
+    cmake_minimum_required(VERSION 3.13)
+  - |
+    cmake_minimum_required(VERSION 3.14)
+  - |
+    # Project with minimum version that could be higher
+    cmake_minimum_required(VERSION 3.12)
+    project(MyProject)
+  - |
+    # Multiple version specifications
+    cmake_minimum_required(VERSION 3.10)
+    cmake_minimum_required(VERSION 3.20)

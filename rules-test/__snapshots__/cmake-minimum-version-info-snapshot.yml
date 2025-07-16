@@ -1,0 +1,92 @@
+id: cmake-minimum-version-info
+snapshots:
+  ? |-
+    # Multiple version specifications
+    cmake_minimum_required(VERSION 3.10)
+    cmake_minimum_required(VERSION 3.20)
+  : labels:
+    - source: cmake_minimum_required(VERSION 3.10)
+      style: primary
+      start: 34
+      end: 70
+  ? |
+    # Multiple version specifications
+    cmake_minimum_required(VERSION 3.10)
+    cmake_minimum_required(VERSION 3.20)
+  : labels:
+    - source: cmake_minimum_required(VERSION 3.10)
+      style: primary
+      start: 34
+      end: 70
+    - source: VERSION 3.10
+      style: secondary
+      start: 57
+      end: 69
+  ? |
+    # Project with minimum version that could be higher
+    cmake_minimum_required(VERSION 3.12)
+    project(MyProject)
+  : labels:
+    - source: cmake_minimum_required(VERSION 3.12)
+      style: primary
+      start: 52
+      end: 88
+    - source: VERSION 3.12
+      style: secondary
+      start: 75
+      end: 87
+  ? |
+    cmake_minimum_required(VERSION 3.10)
+  : labels:
+    - source: cmake_minimum_required(VERSION 3.10)
+      style: primary
+      start: 0
+      end: 36
+    - source: VERSION 3.10
+      style: secondary
+      start: 23
+      end: 35
+  ? |
+    cmake_minimum_required(VERSION 3.11)
+  : labels:
+    - source: cmake_minimum_required(VERSION 3.11)
+      style: primary
+      start: 0
+      end: 36
+    - source: VERSION 3.11
+      style: secondary
+      start: 23
+      end: 35
+  ? |
+    cmake_minimum_required(VERSION 3.12)
+  : labels:
+    - source: cmake_minimum_required(VERSION 3.12)
+      style: primary
+      start: 0
+      end: 36
+    - source: VERSION 3.12
+      style: secondary
+      start: 23
+      end: 35
+  ? |
+    cmake_minimum_required(VERSION 3.13)
+  : labels:
+    - source: cmake_minimum_required(VERSION 3.13)
+      style: primary
+      start: 0
+      end: 36
+    - source: VERSION 3.13
+      style: secondary
+      start: 23
+      end: 35
+  ? |
+    cmake_minimum_required(VERSION 3.14)
+  : labels:
+    - source: cmake_minimum_required(VERSION 3.14)
+      style: primary
+      start: 0
+      end: 36
+    - source: VERSION 3.14
+      style: secondary
+      start: 23
+      end: 35

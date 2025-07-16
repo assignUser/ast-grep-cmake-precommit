@@ -1,0 +1,8 @@
+id: prefer-find-package
+message: Use find_package() instead of manual library finding with find_path() and find_library(). Modern CMake prefers find_package for dependency management.
+severity: warning
+language: cmake
+rule:
+  any:
+    - pattern: find_path($$$)
+    - pattern: find_library($$$)

@@ -1,0 +1,8 @@
+id: cmake-minimum-version-info
+message: CMake minimum version should ideally be 3.15 or higher for access to modern CMake features and improved functionality.
+severity: info
+language: cmake
+rule:
+  pattern: cmake_minimum_required(VERSION $$$)
+  has:
+    regex: 'VERSION\s+3\.1[0-4](\.[0-9]+)?$'

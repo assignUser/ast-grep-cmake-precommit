@@ -1,0 +1,8 @@
+id: cmake-minimum-version-error
+message: CMake minimum version should be at least 3.10. Versions below 3.10 have deprecated features that were removed in CMake 4.0.
+severity: error
+language: cmake
+rule:
+  pattern: cmake_minimum_required(VERSION $$$)
+  has:
+    regex: 'VERSION\s+(2\.[0-9]+(\.[0-9]+)?|3\.[0-9](\.[0-9]+)?)$'
