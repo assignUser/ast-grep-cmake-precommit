@@ -17,12 +17,6 @@ To run all rule tests:
 ```bash
 ast-grep test
 ```
-
-To run tests without snapshot validation (simpler approach):
-```bash
-ast-grep test
-```
-
 ## Writing Test Cases
 
 Test configuration files follow this structure:
@@ -49,3 +43,13 @@ invalid:
 ## Setup Requirements
 
 The CMake parser should be automatically configured through the `sgconfig.yml` file. If you encounter parser issues, ensure the tree-sitter-cmake parser is available in the `parsers/` directory.
+
+To manually rebuild the parser:
+```bash
+  mkdir -p parsers
+  cd parsers
+  git clone https://github.com/uyha/tree-sitter-cmake.git
+  cd tree-sitter-cmake
+  tree-sitter generate
+  tree-sitter build
+```
