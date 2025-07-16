@@ -10,6 +10,7 @@ rule:
     - pattern: install_files($ARGS)
     - pattern: install_programs($ARGS)
     - pattern: install_targets($ARGS)
+    - pattern: link_directories($ARGS)
     - pattern: load_command($ARGS)
     - pattern: make_directory($ARGS)
     - pattern: output_required_files($ARGS)

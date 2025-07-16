@@ -36,6 +36,17 @@ valid:
     # Variable names that happen to match should not trigger
     set(exec_program_result "some value")
     set(make_directory_path "/tmp")
+  - |
+    add_library(mylib SHARED src/mylib.cpp)
+    target_link_libraries(mylib PRIVATE /usr/local/lib/libfoo.so)
+  - |
+    find_library(FOO_LIB foo PATHS /usr/local/lib)
+    target_link_libraries(mylib PRIVATE ${FOO_LIB})
+  - |
+    target_link_libraries(mylib PRIVATE ${CMAKE_BINARY_DIR}/lib/libbar.a)
+  - |
+    # This is just a comment about link_directories
+    target_link_libraries(mylib PRIVATE somelib)
 invalid:
   # These should trigger the rule - deprecated command usage
   - build_name(BUILD_NAME)
@@ -78,3 +89,15 @@ invalid:
     add_executable(myapp main.cpp)
     install(TARGETS myapp DESTINATION bin)
     install_programs(/usr/bin script.sh)  # This line should trigger
+  - link_directories(/usr/local/lib)
+  - |
+    link_directories(${CMAKE_BINARY_DIR}/lib)
+  - |
+    link_directories(
+        /opt/lib
+        /usr/lib64
+    )
+  - |
+    cmake_minimum_required(VERSION 3.10)
+    project(TestProject)
+    link_directories(/usr/local/lib)

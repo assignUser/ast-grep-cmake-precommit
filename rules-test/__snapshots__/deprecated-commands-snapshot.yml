@@ -57,6 +57,15 @@ snapshots:
       style: primary
       start: 0
       end: 22
+  ? |
+    cmake_minimum_required(VERSION 3.10)
+    project(TestProject)
+    link_directories(/usr/local/lib)
+  : labels:
+    - source: link_directories(/usr/local/lib)
+      style: primary
+      start: 58
+      end: 90
   exec_program(ls ARGS "-la" OUTPUT_VARIABLE LS_OUTPUT):
     labels:
     - source: exec_program(ls ARGS "-la" OUTPUT_VARIABLE LS_OUTPUT)
@@ -87,6 +96,33 @@ snapshots:
       style: primary
       start: 0
       end: 31
+  ? |
+    link_directories(
+        /opt/lib
+        /usr/lib64
+    )
+  : labels:
+    - source: |-
+        link_directories(
+            /opt/lib
+            /usr/lib64
+        )
+      style: primary
+      start: 0
+      end: 47
+  ? |
+    link_directories(${CMAKE_BINARY_DIR}/lib)
+  : labels:
+    - source: link_directories(${CMAKE_BINARY_DIR}/lib)
+      style: primary
+      start: 0
+      end: 41
+  link_directories(/usr/local/lib):
+    labels:
+    - source: link_directories(/usr/local/lib)
+      style: primary
+      start: 0
+      end: 32
   load_command(COMMAND mycommand src/mycommand.c):
     labels:
     - source: load_command(COMMAND mycommand src/mycommand.c)
