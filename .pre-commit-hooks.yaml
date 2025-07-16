@@ -1,0 +1,6 @@
+- id: cmake-lint
+  name: CMake Linter (ast-grep)
+  entry: npm run lint
+  language: node
+  types:
+    - cmake
