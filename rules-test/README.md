@@ -18,11 +18,6 @@ To run all rule tests:
 ast-grep test
 ```
 
-To run tests without snapshot validation (simpler approach):
-```bash
-ast-grep test --skip-snapshot-tests
-```
-
 ## Writing Test Cases
 
 Test configuration files follow this structure:
