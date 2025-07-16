@@ -11,6 +11,16 @@ snapshots:
       start: 86
       end: 124
   ? |
+    # Mixed with target definitions - still should trigger
+    add_library(mylib src/lib.cpp)
+    add_compile_definitions(GLOBAL_DEFINE)
+    target_compile_definitions(mylib PRIVATE LOCAL_DEFINE)
+  : labels:
+    - source: add_compile_definitions(GLOBAL_DEFINE)
+      style: primary
+      start: 86
+      end: 124
+  ? |
     # Multiple definitions
     add_compile_definitions(DEBUG TESTING VERSION=2.0)
   : labels:

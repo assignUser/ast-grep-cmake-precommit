@@ -23,6 +23,16 @@ snapshots:
       start: 72
       end: 97
   ? |
+    # Mixed usage - still should trigger
+    add_executable(myapp src/main.cpp)
+    add_link_options(-static)
+    target_link_options(myapp PRIVATE -Wl,--strip-all)
+  : labels:
+    - source: add_link_options(-static)
+      style: primary
+      start: 72
+      end: 97
+  ? |
     # Using variables
     set(LINK_FLAGS -pthread -Wl,--as-needed)
     add_link_options(${LINK_FLAGS})
