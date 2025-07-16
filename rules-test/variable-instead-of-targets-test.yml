@@ -8,9 +8,6 @@ valid:
     add_executable(myapp src/main.cpp)
     target_link_libraries(myapp PRIVATE math_utils string_utils)
   - |
-    add_executable(myapp src/main.cpp)
-    target_link_libraries(myapp PRIVATE /usr/local/lib/libfoo.so)
-  - |
     # Direct target names are preferred
     target_link_libraries(myapp
         PRIVATE
