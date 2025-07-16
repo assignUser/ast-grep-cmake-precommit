@@ -34,3 +34,4 @@ jobs:
         run: |
           ast-grep --help
           pre-commit install
+          pre-commit install-hooks
