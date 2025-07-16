@@ -10,6 +10,15 @@ snapshots:
       start: 34
       end: 70
   ? |
+    # Multiple version specifications
+    cmake_minimum_required(VERSION 3.10)
+    cmake_minimum_required(VERSION 3.20)
+  : labels:
+    - source: cmake_minimum_required(VERSION 3.10)
+      style: primary
+      start: 34
+      end: 70
+  ? |
     # Project with minimum version that could be higher
     cmake_minimum_required(VERSION 3.12)
     project(MyProject)
