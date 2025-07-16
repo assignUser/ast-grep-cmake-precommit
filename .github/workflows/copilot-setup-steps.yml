@@ -37,6 +37,15 @@ jobs:
           pipx install pre-commit uv ast-grep-cli
           npm install -g tree-sitter-cli
 
+      - name: Setup CMake Tree-sitter Parser
+        run: |
+          mkdir -p parsers
+          cd parsers
+          git clone https://github.com/uyha/tree-sitter-cmake.git
+          cd tree-sitter-cmake
+          tree-sitter generate
+          tree-sitter build
+
       - name: Test Dependencies
         run: |
           ast-grep --help

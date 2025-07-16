@@ -1,0 +1,4 @@
+# Build artifacts
+parsers/
+*.so
+*.a

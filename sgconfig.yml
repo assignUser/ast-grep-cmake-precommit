@@ -4,3 +4,14 @@ testConfigs:
   - testDir: rules-test
 utilDirs:
   - utils
+languageGlobs:
+  cmake:
+    - "*.cmake"
+    - "**/CMakeLists.txt"
+customLanguages:
+  cmake:
+    libraryPath: parsers/tree-sitter-cmake/cmake.so
+    extensions:
+      - cmake
+    expandDirs:
+      - CMakeLists.txt

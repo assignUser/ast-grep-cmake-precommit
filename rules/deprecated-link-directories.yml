@@ -1,0 +1,6 @@
+id: deprecated-link-directories
+message: Avoid using deprecated link_directories(). Use target_link_libraries() with full paths instead.
+severity: warning
+language: cmake
+rule:
+  pattern: link_directories($ARGS)
