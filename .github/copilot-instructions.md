@@ -10,8 +10,10 @@ This is a ast-grep based cmake linter repository. See https://ast-grep.github.io
   - Example: `docs: update README with installation instructions`
 
 ### Development Flow
+- You have access to the Github MCP server with credentials to read from public repos and to comment and create issues in this repo
+- ast-grep documentation can be found in this repo: https://github.com/ast-grep/ast-grep.github.io/
+- CMake documentation can be found in this repo: https://github.com/Kitware/CMake
 - Test: `ast-grep test`
-- Once you have executed your plan mark your PR as ready for review.
 
 ## Repository Structure
 
@@ -28,6 +30,12 @@ The project uses ast-grep's default directory conventions where:
 - Rules are automatically discovered from the `rules/` directory
 - Tests are run against files in the `rules-test/` directory
 - Utilities in `utils/` can be imported and used within rule definitions
+
+## Reference material for ast-grep
+- How to write tests for rules: https://ast-grep.github.io/guide/test-rule.html
+- Rule reference: https://ast-grep.github.io/reference/yaml.html
+- Rule objects for composite rules: https://ast-grep.github.io/reference/rule.html
+- Collection of ast-grep examples: https://ast-grep.github.io/catalog
 
 ## Key Guidelines
 CRITICAL: NEVER USE --no-verify WHEN COMMITTING CODE
