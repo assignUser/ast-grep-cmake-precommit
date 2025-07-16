@@ -20,7 +20,7 @@ ast-grep test
 
 To run tests without snapshot validation (simpler approach):
 ```bash
-ast-grep test --skip-snapshot-tests
+ast-grep test
 ```
 
 ## Writing Test Cases
