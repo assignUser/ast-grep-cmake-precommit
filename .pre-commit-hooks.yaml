@@ -1,6 +1,9 @@
 - id: cmake-lint
   name: CMake Linter (ast-grep)
-  entry: npm run lint
+  entry: cmake-linter
   language: node
+  require_serial: true
+  additional_dependencies:
+    - "@ast-grep/cli"
   types:
     - cmake

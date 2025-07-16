@@ -9,7 +9,7 @@
   "description": "Pre-commit hook for linting CMake with ast-grep",
   "name": "cmake-linter-precommit",
   "scripts": {
-    "install": "pwd; ls -la;tree-sitter build tree-sitter-cmake",
+    "install": "npx tree-sitter build ./tree-sitter-cmake/",
     "lint": "cmake-linter"
   },
   "version": "0.0.1"
