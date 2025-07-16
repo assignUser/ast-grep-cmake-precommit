@@ -1,0 +1,46 @@
+id: variable-instead-of-targets
+valid:
+  # Good practices that should NOT trigger the rule
+  - |
+    add_library(math_utils src/math.cpp)
+    add_library(string_utils src/string.cpp)
+
+    add_executable(myapp src/main.cpp)
+    target_link_libraries(myapp PRIVATE math_utils string_utils)
+  - |
+    # Direct target names are preferred
+    target_link_libraries(myapp
+        PRIVATE
+        target1
+        target2
+        target3
+    )
+invalid:
+  # These should trigger the rule - using variables instead of targets
+  - |
+    set(MATH_LIB math_utils)
+    target_link_libraries(myapp PRIVATE ${MATH_LIB})
+  - |
+    set(STRING_LIB string_utils)
+    target_link_libraries(myapp PUBLIC ${STRING_LIB})
+  - |
+    set(ALL_LIBS math_utils string_utils)
+    target_link_libraries(myapp INTERFACE ${ALL_LIBS})
+  - |
+    set(MYLIB some_target)
+    target_link_libraries(myapp ${MYLIB})
+  - |
+    set(MATH_LIB math_utils)
+    set(STRING_LIB string_utils)
+    set(ALL_LIBS ${MATH_LIB} ${STRING_LIB})
+
+    add_executable(myapp src/main.cpp)
+    target_link_libraries(myapp PRIVATE ${ALL_LIBS})
+  # Note: Variables in paths and find_library results will also trigger this rule
+  # These are acceptable false positives for the first version of this rule
+  - |
+    find_library(FOO_LIB foo PATHS /usr/local/lib)
+    target_link_libraries(myapp PRIVATE ${FOO_LIB})
+  - |
+    # Using variable as part of a path also triggers
+    target_link_libraries(myapp PRIVATE ${CMAKE_BINARY_DIR}/lib/libfoo.a)
