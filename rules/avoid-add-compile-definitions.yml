@@ -1,6 +1,0 @@
-id: avoid-add-compile-definitions
-message: Avoid using add_compile_definitions(). Use target_compile_definitions() instead for target-specific definitions.
-severity: warning
-language: cmake
-rule:
-  pattern: add_compile_definitions($ARGS)
