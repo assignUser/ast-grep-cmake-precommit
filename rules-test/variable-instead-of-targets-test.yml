@@ -15,6 +15,22 @@ valid:
         target2
         target3
     )
+  # These are now considered valid - find_library results with _LIBRARY/_LIBRARIES suffix
+  - |
+    find_library(MATH_LIBRARY math)
+    target_link_libraries(myapp PRIVATE ${MATH_LIBRARY})
+  - |
+    find_library(STRING_LIBRARIES string)
+    target_link_libraries(myapp PRIVATE ${STRING_LIBRARIES})
+  # Path variables are now considered valid
+  - |
+    target_link_libraries(myapp PRIVATE ${CMAKE_BINARY_DIR}/lib/libfoo.a)
+  - |
+    target_link_libraries(myapp PRIVATE ${CMAKE_SOURCE_DIR}/external/lib.a)
+  - |
+    target_link_libraries(myapp PRIVATE ${PROJECT_BINARY_DIR}/lib/custom.so)
+  - |
+    target_link_libraries(myapp PRIVATE /usr/lib/${ARCH}/libsomething.so)
 invalid:
   # These should trigger the rule - using variables instead of targets
   - |
@@ -36,11 +52,10 @@ invalid:
 
     add_executable(myapp src/main.cpp)
     target_link_libraries(myapp PRIVATE ${ALL_LIBS})
-  # Note: Variables in paths and find_library results will also trigger this rule
-  # These are acceptable false positives for the first version of this rule
+  - |
+    set(TARGET_NAME my_target)
+    target_link_libraries(myapp PRIVATE ${TARGET_NAME})
+  # Variables ending in _LIB (without _LIBRARY suffix) are still flagged
   - |
     find_library(FOO_LIB foo PATHS /usr/local/lib)
     target_link_libraries(myapp PRIVATE ${FOO_LIB})
-  - |
-    # Using variable as part of a path also triggers
-    target_link_libraries(myapp PRIVATE ${CMAKE_BINARY_DIR}/lib/libfoo.a)

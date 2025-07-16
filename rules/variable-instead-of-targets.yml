@@ -3,6 +3,24 @@ message: Don't use variables in place of targets. Use target names directly in t
 severity: warning
 language: cmake
 rule:
-  pattern: target_link_libraries($$$)
-  has:
-    regex: '\$\{.*\}'
+  all:
+    # Match target_link_libraries with variables
+    - pattern: target_link_libraries($$$)
+    - has:
+        regex: '\$\{[^}]+\}'
+    # Exclude path-like expressions (containing / or \ anywhere in the argument)
+    - not:
+        has:
+          regex: '[/\\]'
+    # Exclude CMAKE built-in variables
+    - not:
+        has:
+          regex: '\$\{CMAKE_[^}]*\}'
+    # Exclude PROJECT built-in variables
+    - not:
+        has:
+          regex: '\$\{PROJECT_[^}]*\}'
+    # Exclude common find_library variable suffixes (but be conservative)
+    - not:
+        has:
+          regex: '\$\{[^}]*_LIBRAR(Y|IES)\}'
