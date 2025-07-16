@@ -1,0 +1,65 @@
+id: avoid-add-definitions
+snapshots:
+  ? |-
+    # Mixed usage - this should still trigger
+    add_library(mylib src/lib.cpp)
+    add_definitions(-DGLOBAL_DEF)
+    target_compile_definitions(mylib PRIVATE LOCAL_DEF)
+  : labels:
+    - source: add_definitions(-DGLOBAL_DEF)
+      style: primary
+      start: 73
+      end: 102
+  ? |
+    # Multiple definitions
+    add_definitions(-DDEBUG -DVERSION=1.0)
+  : labels:
+    - source: add_definitions(-DDEBUG -DVERSION=1.0)
+      style: primary
+      start: 23
+      end: 61
+  ? |
+    # Using variables
+    set(MY_DEFS -DFOO -DBAR)
+    add_definitions(${MY_DEFS})
+  : labels:
+    - source: add_definitions(${MY_DEFS})
+      style: primary
+      start: 43
+      end: 70
+  ? |
+    add_definitions(
+        -DFOO
+        -DBAR=value
+    )
+  : labels:
+    - source: |-
+        add_definitions(
+            -DFOO
+            -DBAR=value
+        )
+      style: primary
+      start: 0
+      end: 44
+  ? |
+    add_definitions(-DFOO -DBAR)
+  : labels:
+    - source: add_definitions(-DFOO -DBAR)
+      style: primary
+      start: 0
+      end: 28
+  add_definitions(-DFOO):
+    labels:
+    - source: add_definitions(-DFOO)
+      style: primary
+      start: 0
+      end: 22
+  ? |
+    cmake_minimum_required(VERSION 3.10)
+    project(TestProject)
+    add_definitions(-DPROJECT_BUILD)
+  : labels:
+    - source: add_definitions(-DPROJECT_BUILD)
+      style: primary
+      start: 58
+      end: 90
