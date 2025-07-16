@@ -30,6 +30,16 @@ snapshots:
       start: 138
       end: 174
   ? |
+    # Mixed with modern commands - deprecated ones should still trigger
+    add_executable(myapp main.cpp)
+    install(TARGETS myapp DESTINATION bin)
+    install_programs(/usr/bin script.sh)  # This line should trigger
+  : labels:
+    - source: install_programs(/usr/bin script.sh)
+      style: primary
+      start: 138
+      end: 174
+  ? |
     # Multiple deprecated commands in one file
     cmake_minimum_required(VERSION 3.10)
     project(TestProject)
