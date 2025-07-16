@@ -6,11 +6,14 @@ This repository provides AST-based linting for CMake files using [ast-grep](http
 
 - **Custom CMake Language Support**: Uses tree-sitter-cmake parser to enable ast-grep to understand CMake syntax
 - **Pattern-based Rules**: Define linting rules using ast-grep's powerful pattern matching
+- **Pre-commit Hook Integration**: Can be used as a pre-commit hook in your CMake projects
 - **CI Integration**: Automatically builds the CMake parser and runs linting
 
 ## Setup
 
-The repository automatically sets up the CMake parser during CI. For local development:
+### Local Development
+
+For local development and testing:
 
 1. Install dependencies:
    ```bash
@@ -20,17 +23,35 @@ The repository automatically sets up the CMake parser during CI. For local devel
 
 2. Build the CMake parser:
    ```bash
-   mkdir -p parsers
-   cd parsers
-   git clone https://github.com/uyha/tree-sitter-cmake.git
-   cd tree-sitter-cmake
-   tree-sitter generate
-   tree-sitter build
+   tree-sitter build tree-sitter-cmake/
    ```
 
 3. Test the setup:
    ```bash
    ast-grep scan
+   ```
+
+### Using as a Pre-commit Hook
+
+To use cmake-linter in your project as a pre-commit hook:
+
+1. Add to your `.pre-commit-config.yaml`:
+   ```yaml
+   repos:
+     - repo: https://github.com/assignUser/cmake-linter
+       rev: main  # Use the ref you want to point at
+       hooks:
+         - id: cmake-lint
+   ```
+
+2. Install the hook:
+   ```bash
+   pre-commit install
+   ```
+
+3. Run manually (optional):
+   ```bash
+   pre-commit run cmake-lint --all-files
    ```
 
 ## Usage
@@ -70,5 +91,6 @@ The linter recognizes these file patterns:
 ## Contributing
 
 1. Follow conventional commits format
-2. Run `pre-commit install && pre-commit run --all-files` before committing
-3. Test rules with `ast-grep test`
+2. Build the CMake parser: `tree-sitter build tree-sitter-cmake/`
+3. Run `pre-commit install && pre-commit run --all-files` before committing
+4. Test rules with `ast-grep test`

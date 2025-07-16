@@ -13,6 +13,7 @@ This is a ast-grep based cmake linter repository. See https://ast-grep.github.io
 - You have access to the Github MCP server with credentials to read from public repos and to comment and create issues in this repo
 - ast-grep documentation can be found in this repo: https://github.com/ast-grep/ast-grep.github.io/
 - CMake documentation can be found in this repo: https://github.com/Kitware/CMake
+- Build the CMake parser: `tree-sitter build tree-sitter-cmake/`
 - Test: `ast-grep test`
 
 ## Repository Structure
@@ -25,6 +26,10 @@ This repository follows the standard ast-grep project layout for linting CMake f
 - `sgconfig.yml` - Main ast-grep configuration file that specifies the project structure and settings
 - `.github/` - GitHub-specific configuration including workflows and this instructions file
 - `.pre-commit-config.yaml` - Pre-commit hooks configuration for code quality enforcement
+- `.pre-commit-hooks.yaml` - Pre-commit hook definition for using this repository as a pre-commit hook in other projects
+- `package.json` - Node.js package configuration for pre-commit hook installation
+- `scripts/` - Contains the cmake-linter.sh wrapper script
+- `tree-sitter-cmake/` - Vendored tree-sitter CMake grammar
 
 The project uses ast-grep's default directory conventions where:
 - Rules are automatically discovered from the `rules/` directory
