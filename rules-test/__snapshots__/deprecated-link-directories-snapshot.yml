@@ -5,34 +5,34 @@ snapshots:
     project(TestProject)
     link_directories(/usr/local/lib)
   : labels:
-      - source: link_directories(/usr/local/lib)
-        style: primary
-        start: 58
-        end: 90
+    - source: link_directories(/usr/local/lib)
+      style: primary
+      start: 58
+      end: 90
   ? |
     link_directories(
         /opt/lib
         /usr/lib64
     )
   : labels:
-      - source: |-
-          link_directories(
-              /opt/lib
-              /usr/lib64
-          )
-        style: primary
-        start: 0
-        end: 47
+    - source: |-
+        link_directories(
+            /opt/lib
+            /usr/lib64
+        )
+      style: primary
+      start: 0
+      end: 47
   ? |
     link_directories(${CMAKE_BINARY_DIR}/lib)
   : labels:
-      - source: link_directories(${CMAKE_BINARY_DIR}/lib)
-        style: primary
-        start: 0
-        end: 41
+    - source: link_directories(${CMAKE_BINARY_DIR}/lib)
+      style: primary
+      start: 0
+      end: 41
   link_directories(/usr/local/lib):
     labels:
-      - source: link_directories(/usr/local/lib)
-        style: primary
-        start: 0
-        end: 32
+    - source: link_directories(/usr/local/lib)
+      style: primary
+      start: 0
+      end: 32

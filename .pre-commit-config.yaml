@@ -1,3 +1,4 @@
+exclude: ^rules-test/__snapshots__/.*$
 repos:
   - repo: meta
     hooks:
