@@ -1,4 +1,4 @@
-exclude: ^rules-test/__snapshots__/.*$
+exclude: rules-test/__snapshots__/.*|tree-sitter-cmake/.*
 repos:
   - repo: meta
     hooks:
@@ -13,7 +13,8 @@ repos:
       - id: check-added-large-files
       - id: check-executables-have-shebangs
       - id: check-shebang-scripts-are-executable
-
+      - id: pretty-format-json
+        args: [--autofix]
   - repo: https://github.com/adrienverge/yamllint.git
     rev: v1.37.0
     hooks:

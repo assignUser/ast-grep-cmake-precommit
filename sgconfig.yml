@@ -10,7 +10,7 @@ languageGlobs:
     - "**/CMakeLists.txt"
 customLanguages:
   cmake:
-    libraryPath: parsers/tree-sitter-cmake/cmake.so
+    libraryPath: cmake.so
     extensions:
       - cmake
     expandDirs:

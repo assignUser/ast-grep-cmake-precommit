@@ -39,12 +39,7 @@ jobs:
 
       - name: Setup CMake Tree-sitter Parser
         run: |
-          mkdir -p parsers
-          cd parsers
-          git clone https://github.com/uyha/tree-sitter-cmake.git
-          cd tree-sitter-cmake
-          tree-sitter generate
-          tree-sitter build
+          tree-sitter build tree-sitter-cmake/
 
       - name: Test Dependencies
         run: |

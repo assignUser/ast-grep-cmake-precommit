@@ -1,0 +1,16 @@
+{
+  "bin": {
+    "cmake-linter": "./scripts/cmake-linter.sh"
+  },
+  "dependencies": {
+    "@ast-grep/cli": ">=0.38.7",
+    "tree-sitter-cli": ">=0.25.8"
+  },
+  "description": "Pre-commit hook for linting CMake with ast-grep",
+  "name": "cmake-linter-precommit",
+  "scripts": {
+    "install": "npx tree-sitter build ./tree-sitter-cmake/",
+    "lint": "cmake-linter"
+  },
+  "version": "0.0.1"
+}
