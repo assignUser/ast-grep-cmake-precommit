@@ -1,0 +1,71 @@
+id: avoid-add-link-options
+valid:
+  # Good practices that should NOT trigger the rule
+  - |
+    add_library(mylib SHARED src/mylib.cpp)
+    target_link_options(mylib PRIVATE -Wl,--as-needed)
+  - |
+    add_executable(myapp src/main.cpp)
+    target_link_options(myapp PRIVATE -static)
+  - |
+    # Target-specific options with different scopes
+    target_link_options(lib1 PRIVATE -fPIC)
+    target_link_options(lib2 PUBLIC -pthread)
+    target_link_options(lib3 INTERFACE -Wl,--export-dynamic)
+  - |
+    # Using generator expressions
+    target_link_options(mylib PRIVATE
+        $<$<CONFIG:Debug>:-Wl,--debug>
+        $<$<CONFIG:Release>:-Wl,--strip-all>
+    )
+  - |
+    # Platform-specific options
+    if(UNIX)
+        target_link_options(mylib PRIVATE -Wl,--as-needed)
+    elseif(WIN32)
+        target_link_options(mylib PRIVATE /SUBSYSTEM:CONSOLE)
+    endif()
+  - |
+    # Multiple options
+    target_link_options(mylib PRIVATE
+        -Wl,--as-needed
+        -Wl,--no-undefined
+        -pthread
+    )
+  - |
+    # This is just a comment about add_link_options
+    target_link_options(mylib PRIVATE -Wl,--strip-all)
+invalid:
+  # These should trigger the rule - directory-wide usage
+  - add_link_options(-pthread)
+  - |
+    add_link_options(-Wl,--as-needed -Wl,--no-undefined)
+  - |
+    add_link_options(
+        -pthread
+        -Wl,--as-needed
+        -static-libgcc
+    )
+  - |
+    cmake_minimum_required(VERSION 3.13)
+    project(TestProject)
+    add_link_options(-fPIC)
+  - |
+    # Windows style options
+    add_link_options(/SUBSYSTEM:CONSOLE /DEBUG)
+  - |
+    # Using variables
+    set(LINK_FLAGS -pthread -Wl,--as-needed)
+    add_link_options(${LINK_FLAGS})
+  - |
+    # Conditional directory-wide options - still should trigger
+    if(UNIX)
+        add_link_options(-pthread)
+    elseif(WIN32)
+        add_link_options(/DEBUG)
+    endif()
+  - |
+    # Mixed usage - still should trigger
+    add_executable(myapp src/main.cpp)
+    add_link_options(-static)
+    target_link_options(myapp PRIVATE -Wl,--strip-all)

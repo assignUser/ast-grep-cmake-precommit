@@ -1,0 +1,6 @@
+id: avoid-add-link-options
+message: Avoid using add_link_options(). Use target_link_options() instead for target-specific link options.
+severity: warning
+language: cmake
+rule:
+  pattern: add_link_options($ARGS)

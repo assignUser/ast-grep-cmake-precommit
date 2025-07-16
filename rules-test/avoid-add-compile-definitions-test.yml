@@ -1,0 +1,49 @@
+id: avoid-add-compile-definitions
+valid:
+  # Good practices that should NOT trigger the rule
+  - |
+    add_library(mylib SHARED src/mylib.cpp)
+    target_compile_definitions(mylib PRIVATE FOO BAR=value)
+  - |
+    add_executable(myapp src/main.cpp)
+    target_compile_definitions(myapp PRIVATE DEBUG_MODE)
+  - |
+    # Target-specific definitions with scopes
+    target_compile_definitions(lib1 PRIVATE LIB1_INTERNAL)
+    target_compile_definitions(lib2 PUBLIC LIB2_API)
+    target_compile_definitions(lib3 INTERFACE LIB3_HEADER_ONLY)
+  - |
+    # Using generator expressions
+    target_compile_definitions(mylib PRIVATE
+        $<$<CONFIG:Debug>:DEBUG_BUILD>
+        $<$<CONFIG:Release>:RELEASE_BUILD>
+    )
+  - |
+    # This is just a comment about add_compile_definitions
+    target_compile_definitions(mylib PRIVATE SOME_DEF)
+invalid:
+  # These should trigger the rule - directory-wide usage
+  - add_compile_definitions(FOO)
+  - |
+    add_compile_definitions(FOO BAR=value)
+  - |
+    add_compile_definitions(
+        DEBUG_MODE
+        VERSION=1.2.3
+    )
+  - |
+    cmake_minimum_required(VERSION 3.12)
+    project(TestProject)
+    add_compile_definitions(PROJECT_GLOBAL)
+  - |
+    # Multiple definitions
+    add_compile_definitions(DEBUG TESTING VERSION=2.0)
+  - |
+    # Using variables
+    set(MY_DEFS DEBUG PROFILE)
+    add_compile_definitions(${MY_DEFS})
+  - |
+    # Mixed with target definitions - still should trigger
+    add_library(mylib src/lib.cpp)
+    add_compile_definitions(GLOBAL_DEFINE)
+    target_compile_definitions(mylib PRIVATE LOCAL_DEFINE)
