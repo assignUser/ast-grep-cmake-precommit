@@ -1,6 +1,0 @@
-id: avoid-include-directories
-message: Avoid using include_directories(). Use target_include_directories() instead for target-specific includes.
-severity: warning
-language: cmake
-rule:
-  pattern: include_directories($ARGS)

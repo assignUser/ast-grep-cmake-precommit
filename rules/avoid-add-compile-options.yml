@@ -1,6 +1,0 @@
-id: avoid-add-compile-options
-message: Avoid using add_compile_options(). Use target_compile_options() instead for target-specific options.
-severity: warning
-language: cmake
-rule:
-  pattern: add_compile_options($ARGS)

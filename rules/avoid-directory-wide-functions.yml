@@ -1,0 +1,11 @@
+id: avoid-directory-wide-functions
+message: Avoid using directory-wide functions. Use target-specific alternatives instead (e.g., target_compile_definitions(), target_compile_options(), target_link_options(), target_include_directories()).
+severity: warning
+language: cmake
+rule:
+  any:
+    - pattern: add_compile_definitions($ARGS)
+    - pattern: add_compile_options($ARGS)
+    - pattern: add_definitions($ARGS)
+    - pattern: add_link_options($ARGS)
+    - pattern: include_directories($ARGS)
