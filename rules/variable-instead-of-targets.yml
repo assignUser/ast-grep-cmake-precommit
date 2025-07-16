@@ -24,3 +24,7 @@ rule:
     - not:
         has:
           regex: '\$\{[^}]*_LIBRAR(Y|IES)\}'
+    # Exclude generator expressions
+    - not:
+        has:
+          regex: '\$<[^>]*>'

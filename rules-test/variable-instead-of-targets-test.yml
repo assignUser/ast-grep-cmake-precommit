@@ -31,6 +31,19 @@ valid:
     target_link_libraries(myapp PRIVATE ${PROJECT_BINARY_DIR}/lib/custom.so)
   - |
     target_link_libraries(myapp PRIVATE /usr/lib/${ARCH}/libsomething.so)
+  # Generator expressions are valid - they should not trigger the rule
+  - |
+    target_link_libraries(
+      test_main
+      PUBLIC gtest $<$<BOOL:${BUILD_TRACING}>:perfetto>)
+  - |
+    target_link_libraries(myapp PRIVATE $<$<CONFIG:Debug>:debug_lib>)
+  - |
+    target_link_libraries(myapp PUBLIC $<TARGET_NAME:some_target>)
+  - |
+    target_link_libraries(myapp INTERFACE $<$<PLATFORM_ID:Windows>:ws2_32>)
+  - |
+    target_link_libraries(myapp PRIVATE regular_target $<$<BOOL:${USE_FEATURE}>:feature_lib>)
 invalid:
   # These should trigger the rule - using variables instead of targets
   - |
