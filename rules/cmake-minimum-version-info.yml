@@ -3,9 +3,6 @@ message: CMake minimum version should ideally be 3.15 or higher for access to mo
 severity: info
 language: cmake
 rule:
-  any:
-    - pattern: cmake_minimum_required(VERSION 3.10)
-    - pattern: cmake_minimum_required(VERSION 3.11)
-    - pattern: cmake_minimum_required(VERSION 3.12)
-    - pattern: cmake_minimum_required(VERSION 3.13)
-    - pattern: cmake_minimum_required(VERSION 3.14)
+  pattern: cmake_minimum_required(VERSION $$$)
+  has:
+    regex: 'VERSION\s+3\.1[0-4](\.[0-9]+)?$'

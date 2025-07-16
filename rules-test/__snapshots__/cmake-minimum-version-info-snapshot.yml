@@ -18,6 +18,10 @@ snapshots:
       style: primary
       start: 34
       end: 70
+    - source: VERSION 3.10
+      style: secondary
+      start: 57
+      end: 69
   ? |
     # Project with minimum version that could be higher
     cmake_minimum_required(VERSION 3.12)
@@ -27,6 +31,10 @@ snapshots:
       style: primary
       start: 52
       end: 88
+    - source: VERSION 3.12
+      style: secondary
+      start: 75
+      end: 87
   ? |
     cmake_minimum_required(VERSION 3.10)
   : labels:
@@ -34,6 +42,10 @@ snapshots:
       style: primary
       start: 0
       end: 36
+    - source: VERSION 3.10
+      style: secondary
+      start: 23
+      end: 35
   ? |
     cmake_minimum_required(VERSION 3.11)
   : labels:
@@ -41,6 +53,10 @@ snapshots:
       style: primary
       start: 0
       end: 36
+    - source: VERSION 3.11
+      style: secondary
+      start: 23
+      end: 35
   ? |
     cmake_minimum_required(VERSION 3.12)
   : labels:
@@ -48,6 +64,10 @@ snapshots:
       style: primary
       start: 0
       end: 36
+    - source: VERSION 3.12
+      style: secondary
+      start: 23
+      end: 35
   ? |
     cmake_minimum_required(VERSION 3.13)
   : labels:
@@ -55,6 +75,10 @@ snapshots:
       style: primary
       start: 0
       end: 36
+    - source: VERSION 3.13
+      style: secondary
+      start: 23
+      end: 35
   ? |
     cmake_minimum_required(VERSION 3.14)
   : labels:
@@ -62,3 +86,7 @@ snapshots:
       style: primary
       start: 0
       end: 36
+    - source: VERSION 3.14
+      style: secondary
+      start: 23
+      end: 35

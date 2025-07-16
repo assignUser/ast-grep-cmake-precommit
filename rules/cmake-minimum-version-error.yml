@@ -3,17 +3,6 @@ message: CMake minimum version should be at least 3.10. Versions below 3.10 have
 severity: error
 language: cmake
 rule:
-  any:
-    - pattern: cmake_minimum_required(VERSION 2.6)
-    - pattern: cmake_minimum_required(VERSION 2.8)
-    - pattern: cmake_minimum_required(VERSION 2.8.12)
-    - pattern: cmake_minimum_required(VERSION 3.0)
-    - pattern: cmake_minimum_required(VERSION 3.1)
-    - pattern: cmake_minimum_required(VERSION 3.2)
-    - pattern: cmake_minimum_required(VERSION 3.3)
-    - pattern: cmake_minimum_required(VERSION 3.4)
-    - pattern: cmake_minimum_required(VERSION 3.5)
-    - pattern: cmake_minimum_required(VERSION 3.6)
-    - pattern: cmake_minimum_required(VERSION 3.7)
-    - pattern: cmake_minimum_required(VERSION 3.8)
-    - pattern: cmake_minimum_required(VERSION 3.9)
+  pattern: cmake_minimum_required(VERSION $$$)
+  has:
+    regex: 'VERSION\s+(2\.[0-9]+(\.[0-9]+)?|3\.[0-9](\.[0-9]+)?)$'
