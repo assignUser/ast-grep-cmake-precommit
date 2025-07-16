@@ -1,0 +1,90 @@
+id: variable-instead-of-targets
+snapshots:
+  ? |-
+    # Using variable as part of a path also triggers
+    target_link_libraries(myapp PRIVATE ${CMAKE_BINARY_DIR}/lib/libfoo.a)
+  : labels:
+      - source: target_link_libraries(myapp PRIVATE ${CMAKE_BINARY_DIR}/lib/libfoo.a)
+        style: primary
+        start: 49
+        end: 118
+      - source: myapp PRIVATE ${CMAKE_BINARY_DIR}/lib/libfoo.a
+        style: secondary
+        start: 71
+        end: 117
+  ? |
+    find_library(FOO_LIB foo PATHS /usr/local/lib)
+    target_link_libraries(myapp PRIVATE ${FOO_LIB})
+  : labels:
+      - source: target_link_libraries(myapp PRIVATE ${FOO_LIB})
+        style: primary
+        start: 47
+        end: 94
+      - source: myapp PRIVATE ${FOO_LIB}
+        style: secondary
+        start: 69
+        end: 93
+  ? |
+    set(ALL_LIBS math_utils string_utils)
+    target_link_libraries(myapp INTERFACE ${ALL_LIBS})
+  : labels:
+      - source: target_link_libraries(myapp INTERFACE ${ALL_LIBS})
+        style: primary
+        start: 38
+        end: 88
+      - source: myapp INTERFACE ${ALL_LIBS}
+        style: secondary
+        start: 60
+        end: 87
+  ? |
+    set(MATH_LIB math_utils)
+    set(STRING_LIB string_utils)
+    set(ALL_LIBS ${MATH_LIB} ${STRING_LIB})
+
+    add_executable(myapp src/main.cpp)
+    target_link_libraries(myapp PRIVATE ${ALL_LIBS})
+  : labels:
+      - source: target_link_libraries(myapp PRIVATE ${ALL_LIBS})
+        style: primary
+        start: 130
+        end: 178
+      - source: myapp PRIVATE ${ALL_LIBS}
+        style: secondary
+        start: 152
+        end: 177
+  ? |
+    set(MATH_LIB math_utils)
+    target_link_libraries(myapp PRIVATE ${MATH_LIB})
+  : labels:
+      - source: target_link_libraries(myapp PRIVATE ${MATH_LIB})
+        style: primary
+        start: 25
+        end: 73
+      - source: myapp PRIVATE ${MATH_LIB}
+        style: secondary
+        start: 47
+        end: 72
+  ? |
+    set(MYLIB some_target)
+    target_link_libraries(myapp ${MYLIB})
+  : labels:
+      - source: target_link_libraries(myapp ${MYLIB})
+        style: primary
+        start: 23
+        end: 60
+      - source: myapp ${MYLIB}
+        style: secondary
+        start: 45
+        end: 59
+  ? |
+    set(STRING_LIB string_utils)
+    target_link_libraries(myapp PUBLIC ${STRING_LIB})
+  : labels:
+      - source: target_link_libraries(myapp PUBLIC ${STRING_LIB})
+        style: primary
+        start: 29
+        end: 78
+      - source: myapp PUBLIC ${STRING_LIB}
+        style: secondary
+        start: 51
+        end: 77

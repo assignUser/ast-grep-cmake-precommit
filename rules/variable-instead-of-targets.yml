@@ -1,0 +1,8 @@
+id: variable-instead-of-targets
+message: Don't use variables in place of targets. Use target names directly in target_link_libraries().
+severity: warning
+language: cmake
+rule:
+  pattern: target_link_libraries($$$)
+  has:
+    regex: '\$\{.*\}'
