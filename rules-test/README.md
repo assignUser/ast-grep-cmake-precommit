@@ -1,33 +1,51 @@
-# CMake Language Test
+# CMake Linter Rule Tests
 
-This directory contains test files to verify that the CMake custom language configuration works correctly.
+This directory contains test configuration files to verify that CMake linting rules work correctly.
 
 ## Test Files
 
-### deprecated-link-directories.cmake
-A test file that demonstrates the `deprecated-link-directories` rule which detects usage of the deprecated `link_directories()` command.
+### deprecated-link-directories-test.yml
+A test configuration file that validates the `deprecated-link-directories` rule which detects usage of the deprecated `link_directories()` command.
 
-#### Expected Results
-When running `ast-grep scan rules-test/deprecated-link-directories.cmake`, you should see:
-- 3 warnings for `link_directories()` usage on lines 7, 8, and 16-19
+The test file contains:
+- **valid** cases: CMake code that should NOT trigger the rule (proper usage patterns)
+- **invalid** cases: CMake code that SHOULD trigger the rule (deprecated patterns)
 
-#### Manual Test
+## Running Tests
+
+To run all rule tests:
 ```bash
-ast-grep scan rules-test/deprecated-link-directories.cmake
+ast-grep test
 ```
 
-This should output warnings for the deprecated `link_directories()` calls while ignoring the proper `target_link_libraries()` usage.
+To run tests without snapshot validation (simpler approach):
+```bash
+ast-grep test --skip-snapshot-tests
+```
+
+## Writing Test Cases
+
+Test configuration files follow this structure:
+
+```yaml
+id: rule-name-to-test
+valid:
+  # Code examples that should NOT trigger the rule
+  - |
+    target_link_libraries(mylib PRIVATE /usr/local/lib/libfoo.so)
+  - |
+    find_library(FOO_LIB foo PATHS /usr/local/lib)
+    target_link_libraries(mylib PRIVATE ${FOO_LIB})
+invalid:
+  # Code examples that SHOULD trigger the rule  
+  - link_directories(/usr/local/lib)
+  - |
+    link_directories(
+        /opt/lib
+        /usr/lib64
+    )
+```
 
 ## Setup Requirements
 
-Before testing, ensure the CMake parser is built:
-```bash
-mkdir -p parsers
-cd parsers
-git clone https://github.com/uyha/tree-sitter-cmake.git
-cd tree-sitter-cmake
-tree-sitter generate
-tree-sitter build
-```
-
-The parser library `cmake.so` should be created in `parsers/tree-sitter-cmake/cmake.so`.
+The CMake parser should be automatically configured through the `sgconfig.yml` file. If you encounter parser issues, ensure the tree-sitter-cmake parser is available in the `parsers/` directory.
