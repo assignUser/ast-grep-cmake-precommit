@@ -20,6 +20,16 @@ snapshots:
       start: 68
       end: 97
   ? |
+    # Mixed usage - still should trigger
+    add_library(mylib src/lib.cpp)
+    include_directories(include/)
+    target_include_directories(mylib PRIVATE src/)
+  : labels:
+    - source: include_directories(include/)
+      style: primary
+      start: 68
+      end: 97
+  ? |
     # SYSTEM includes
     include_directories(SYSTEM /usr/local/include)
   : labels:

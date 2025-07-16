@@ -31,6 +31,16 @@ snapshots:
       start: 68
       end: 94
   ? |
+    # Mixed usage - still should trigger
+    add_library(mylib src/lib.cpp)
+    add_compile_options(-fPIC)
+    target_compile_options(mylib PRIVATE -Wall)
+  : labels:
+    - source: add_compile_options(-fPIC)
+      style: primary
+      start: 68
+      end: 94
+  ? |
     # Using variables
     set(WARNING_FLAGS -Wall -Wextra)
     add_compile_options(${WARNING_FLAGS})

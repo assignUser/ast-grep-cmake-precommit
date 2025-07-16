@@ -1,0 +1,24 @@
+id: deprecated-commands
+message: This command is deprecated and should not be used in new code. See CMake documentation for modern alternatives.
+severity: error
+language: cmake
+rule:
+  any:
+    - pattern: build_name($ARGS)
+    - pattern: exec_program($ARGS)
+    - pattern: export_library_dependencies($ARGS)
+    - pattern: install_files($ARGS)
+    - pattern: install_programs($ARGS)
+    - pattern: install_targets($ARGS)
+    - pattern: load_command($ARGS)
+    - pattern: make_directory($ARGS)
+    - pattern: output_required_files($ARGS)
+    - pattern: qt_wrap_cpp($ARGS)
+    - pattern: qt_wrap_ui($ARGS)
+    - pattern: remove($ARGS)
+    - pattern: subdir_depends($ARGS)
+    - pattern: subdirs($ARGS)
+    - pattern: use_mangled_mesa($ARGS)
+    - pattern: utility_source($ARGS)
+    - pattern: variable_requires($ARGS)
+    - pattern: write_file($ARGS)

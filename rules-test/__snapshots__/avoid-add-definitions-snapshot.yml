@@ -11,6 +11,16 @@ snapshots:
       start: 73
       end: 102
   ? |
+    # Mixed usage - this should still trigger
+    add_library(mylib src/lib.cpp)
+    add_definitions(-DGLOBAL_DEF)
+    target_compile_definitions(mylib PRIVATE LOCAL_DEF)
+  : labels:
+    - source: add_definitions(-DGLOBAL_DEF)
+      style: primary
+      start: 73
+      end: 102
+  ? |
     # Multiple definitions
     add_definitions(-DDEBUG -DVERSION=1.0)
   : labels:
