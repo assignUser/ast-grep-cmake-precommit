@@ -39,7 +39,7 @@ To use cmake-linter in your project as a pre-commit hook:
    ```yaml
    repos:
      - repo: https://github.com/assignUser/cmake-linter
-       rev: main  # Use the ref you want to point at
+       rev: <ref>  # don't use 'main' as it won't be updated
        hooks:
          - id: cmake-lint
    ```
