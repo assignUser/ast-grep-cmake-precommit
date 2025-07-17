@@ -1,6 +1,7 @@
 - id: cmake-lint
   name: CMake Linter (ast-grep)
   entry: cmake-linter
+  args: [--report-style, short]
   language: node
   require_serial: true
   additional_dependencies:
