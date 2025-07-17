@@ -52,14 +52,13 @@ rule:
             has:
               regex: '\$<[^>]*>'
 
-    # set_target_properties with variables in target arguments
+    # set_target_properties with variables - specifically target positions before PROPERTIES
     - all:
         - pattern: set_target_properties($$$)
+        # Use precise regex to identify variables before PROPERTIES keyword
+        # This regex matches variables that appear before the word PROPERTIES
         - has:
-            regex: '\$\{[^}]+\}'
-        # Exclude variables that appear after PROPERTIES keyword (property values)
-        - not:
-            pattern: set_target_properties($TARGETS PROPERTIES $$$VAR$$$)
+            regex: '\$\{[^}]+\}.*PROPERTIES'
         # Apply same exclusions
         - not:
             has:
