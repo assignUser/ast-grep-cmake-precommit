@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 pkg_root="$NODE_PATH/cmake-linter-precommit"
-echo "$@"
 ast-grep scan -c="$pkg_root/sgconfig.yml" "$@"
 
 exit $?
