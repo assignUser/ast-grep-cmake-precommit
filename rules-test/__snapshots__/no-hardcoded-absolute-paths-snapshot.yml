@@ -181,6 +181,21 @@ snapshots:
       style: secondary
       start: 35
       end: 68
+  ? |
+    if(UNIX)
+        target_link_libraries(mylib PRIVATE /usr/lib/libunix.so)
+    elseif(WIN32)
+        target_link_libraries(mylib PRIVATE "C:/Windows/System32/winlib.lib")
+    endif()
+  : labels:
+    - source: target_link_libraries(mylib PRIVATE /usr/lib/libunix.so)
+      style: primary
+      start: 13
+      end: 69
+    - source: mylib PRIVATE /usr/lib/libunix.so
+      style: secondary
+      start: 35
+      end: 68
   install(FILES config.h DESTINATION /usr/local/include):
     labels:
     - source: install(FILES config.h DESTINATION /usr/local/include)
