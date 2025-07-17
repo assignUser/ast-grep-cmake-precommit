@@ -1,7 +1,8 @@
 - id: cmake-lint
   name: CMake Linter (ast-grep)
   entry: cmake-linter
-  args: [--report-style, short]
+  # color is disabled because it leaves behind ANSI code fragments
+  args: [--report-style, short, --color, never]
   language: node
   require_serial: true
   additional_dependencies:
