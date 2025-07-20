@@ -13,5 +13,3 @@ customLanguages:
     libraryPath: cmake.so
     extensions:
       - cmake
-    expandDirs:
-      - CMakeLists.txt

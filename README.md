@@ -94,3 +94,21 @@ The linter recognizes these file patterns:
 2. Build the CMake parser: `tree-sitter build tree-sitter-cmake/`
 3. Run `pre-commit install && pre-commit run --all-files` before committing
 4. Test rules with `ast-grep test`
+
+### Testing the Pre-commit Hook
+
+The repository includes a GitHub Actions workflow that automatically tests the pre-commit hook functionality. The workflow:
+
+- Tests the hook against a valid CMakeLists.txt file that should pass linting
+- Tests the hook against an invalid CMakeLists.txt file that should fail linting
+- Validates that `pre-commit try-repo --all-files` works correctly
+
+You can run similar tests locally:
+
+```bash
+# Test with a passing CMakeLists.txt
+ast-grep scan CMakeLists.txt
+
+# Test the pre-commit hook
+pre-commit try-repo https://github.com/assignUser/cmake-linter cmake-lint --all-files
+```

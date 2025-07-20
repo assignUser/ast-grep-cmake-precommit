@@ -1,0 +1,92 @@
+name: Test Pre-commit Hook
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test-hook:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5.6.0
+
+      - name: Install Dependencies
+        run: |
+          pipx install pre-commit ast-grep-cli
+          npm install -g tree-sitter-cli
+
+      - name: Build CMake parser
+        run: |
+          tree-sitter build tree-sitter-cmake/
+
+      - name: Create test directory
+        run: |
+          mkdir -p /tmp/test-cmake-project
+          cd /tmp/test-cmake-project
+          git init
+          git config user.email "test@example.com"
+          git config user.name "Test User"
+
+      - name: Create main.cpp for testing
+        run: |
+          cat > /tmp/test-cmake-project/main.cpp << 'EOF'
+          #include <iostream>
+          int main() {
+              std::cout << "Hello World!" << std::endl;
+              return 0;
+          }
+          EOF
+
+      - name: Create passing CMakeLists.txt
+        run: |
+          cat > /tmp/test-cmake-project/CMakeLists.txt << 'EOF'
+          cmake_minimum_required(VERSION 3.16)
+          project(TestProject)
+
+          set(CMAKE_CXX_STANDARD 17)
+
+          find_package(Threads REQUIRED)
+
+          add_executable(main main.cpp)
+          target_link_libraries(main PRIVATE Threads::Threads)
+
+          install(TARGETS main DESTINATION bin)
+          EOF
+
+      - name: Create failing CMakeLists.txt
+        run: |
+          cat > /tmp/test-cmake-project/CMakeLists-failing.txt << 'EOF'
+          cmake_minimum_required(VERSION 2.8)
+          project(BadProject)
+
+          # Use deprecated command
+          link_directories(/usr/lib)
+
+          # Use hardcoded absolute path
+          target_include_directories(main PRIVATE /usr/include)
+
+          add_executable(main main.cpp)
+          install(TARGETS main DESTINATION /usr/local/bin)
+          EOF
+
+      - name: Test rules
+        run: |
+          ast-grep test
+
+      - name: Test pre-commit hook integration
+        run: |
+          cd /tmp/test-cmake-project
+          git add .
+          git commit -m"Initial Commit"
+          pre-commit try-repo ${{ github.workspace }} cmake-lint --all-files
+          mv CMakeLists-failing.txt CMakeLists.txt
+          pre-commit try-repo ${{ github.workspace }} cmake-lint --all-files || exit 0 && exit 1
