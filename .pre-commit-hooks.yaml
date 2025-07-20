@@ -1,8 +1,7 @@
 - id: cmake-lint
   name: CMake Linter (ast-grep)
-  entry: cmake-linter
-  # color is disabled because it leaves behind ANSI code fragments
-  args: [--report-style, short, --color, never]
+  entry: cmake-scan
+  #TODO: recommend in README to disable color because it leaves behind ANSI code fragments
   language: node
   require_serial: true
   additional_dependencies:
