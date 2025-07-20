@@ -2,6 +2,22 @@ id: variable-instead-of-targets
 message: Don't use variables in place of targets. Use target names directly.
 severity: warning
 language: cmake
+utils:
+  is-cmake-builtin-var: &is-cmake-builtin-var
+    has:
+      regex: '\$\{CMAKE_[^}]*\}'
+  is-project-builtin-var: &is-project-builtin-var
+    has:
+      regex: '\$\{PROJECT_[^}]*\}'
+  is-library-variable-suffix: &is-library-variable-suffix
+    has:
+      regex: '\$\{[^}]*_LIBRAR(Y|IES)\}'
+  is-generator-expression: &is-generator-expression
+    has:
+      regex: '\$<[^>]*>'
+  contains-path-separators: &contains-path-separators
+    has:
+      regex: '[/\\]'
 rule:
   any:
     # target_link_libraries with variables
@@ -10,25 +26,15 @@ rule:
         - has:
             regex: '\$\{[^}]+\}'
         # Exclude path-like expressions (containing / or \ anywhere in the argument)
-        - not:
-            has:
-              regex: '[/\\]'
+        - not: *contains-path-separators
         # Exclude CMAKE built-in variables
-        - not:
-            has:
-              regex: '\$\{CMAKE_[^}]*\}'
+        - not: *is-cmake-builtin-var
         # Exclude PROJECT built-in variables
-        - not:
-            has:
-              regex: '\$\{PROJECT_[^}]*\}'
+        - not: *is-project-builtin-var
         # Exclude common find_library variable suffixes (but be conservative)
-        - not:
-            has:
-              regex: '\$\{[^}]*_LIBRAR(Y|IES)\}'
+        - not: *is-library-variable-suffix
         # Exclude generator expressions
-        - not:
-            has:
-              regex: '\$<[^>]*>'
+        - not: *is-generator-expression
 
     # add_dependencies with variables in dependency arguments
     - all:
@@ -36,21 +42,11 @@ rule:
         - has:
             regex: '\$\{[^}]+\}'
         # Apply same exclusions
-        - not:
-            has:
-              regex: '[/\\]'
-        - not:
-            has:
-              regex: '\$\{CMAKE_[^}]*\}'
-        - not:
-            has:
-              regex: '\$\{PROJECT_[^}]*\}'
-        - not:
-            has:
-              regex: '\$\{[^}]*_LIBRAR(Y|IES)\}'
-        - not:
-            has:
-              regex: '\$<[^>]*>'
+        - not: *contains-path-separators
+        - not: *is-cmake-builtin-var
+        - not: *is-project-builtin-var
+        - not: *is-library-variable-suffix
+        - not: *is-generator-expression
 
     # set_target_properties with variables - specifically target positions before PROPERTIES
     - all:
@@ -60,18 +56,8 @@ rule:
         - has:
             regex: '\$\{[^}]+\}.*PROPERTIES'
         # Apply same exclusions
-        - not:
-            has:
-              regex: '[/\\]'
-        - not:
-            has:
-              regex: '\$\{CMAKE_[^}]*\}'
-        - not:
-            has:
-              regex: '\$\{PROJECT_[^}]*\}'
-        - not:
-            has:
-              regex: '\$\{[^}]*_LIBRAR(Y|IES)\}'
-        - not:
-            has:
-              regex: '\$<[^>]*>'
+        - not: *contains-path-separators
+        - not: *is-cmake-builtin-var
+        - not: *is-project-builtin-var
+        - not: *is-library-variable-suffix
+        - not: *is-generator-expression
