@@ -1,4 +1,4 @@
-This is a ast-grep based cmake linter repository. See https://ast-grep.github.io/guide/scan-project.html for documentation of how `ast-grep scan` works. Please follow these guidelines when contributing:
+This repository provides CMake language support for ast-grep, enabling users to write custom linting rules for CMake projects. See https://ast-grep.github.io/guide/scan-project.html for documentation of how `ast-grep scan` works. Please follow these guidelines when contributing:
 
 ## Code Standards
 
@@ -18,21 +18,22 @@ This is a ast-grep based cmake linter repository. See https://ast-grep.github.io
 
 ## Repository Structure
 
-This repository follows the standard ast-grep project layout for linting CMake files:
+This repository provides CMake language integration for ast-grep, allowing users to write custom linting rules for CMake code:
 
-- `rules/` - Contains ast-grep rule definitions written in YAML format that define the linting patterns for CMake code
-- `rules-test/` - Contains test files and snapshots that validate the behavior of the rules in the `rules/` directory
+- `rules/` - Contains example ast-grep rule definitions in YAML format that demonstrate common CMake linting patterns (users provide their own rules when using the hook)
+- `rules-test/` - Contains test files and snapshots that validate the behavior of the example rules
 - `utils/` - Contains utility functions and helper patterns that can be reused across multiple rules
-- `sgconfig.yml` - Main ast-grep configuration file that specifies the project structure and settings
+- `sgconfig.yml` - Main ast-grep configuration file that specifies the CMake language integration
 - `.github/` - GitHub-specific configuration including workflows and this instructions file
 - `.pre-commit-config.yaml` - Pre-commit hooks configuration for code quality enforcement
-- `.pre-commit-hooks.yaml` - Pre-commit hook definition for using this repository as a pre-commit hook in other projects
+- `.pre-commit-hooks.yaml` - Pre-commit hook definition for using this repository as a CMake integration hook in other projects
 - `package.json` - Node.js package configuration for pre-commit hook installation
-- `scripts/` - Contains the cmake-linter.sh wrapper script
+- `scripts/` - Contains the cmake-scan.js script that enables users to provide their own rule directories
 - `tree-sitter-cmake/` - Vendored tree-sitter CMake grammar
 
-The project uses ast-grep's default directory conventions where:
-- Rules are automatically discovered from the `rules/` directory
+The project provides CMake language integration for ast-grep where:
+- Example rules are provided in the `rules/` directory for reference
+- Users provide their own rule directories when using the pre-commit hook via `--rule-dirs` argument
 - Tests are run against files in the `rules-test/` directory
 - Utilities in `utils/` can be imported and used within rule definitions
 
