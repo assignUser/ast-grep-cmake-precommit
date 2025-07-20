@@ -27,7 +27,7 @@ To use this CMake integration in your project as a pre-commit hook, you need to 
 2. Add to your `.pre-commit-config.yaml`:
    ```yaml
    repos:
-     - repo: https://github.com/assignUser/cmake-linter
+     - repo: https://github.com/assignUser/ast-grep-cmake-precommit
        rev: <ref>  # Use a specific tag/commit, not 'main'
        hooks:
          - id: cmake-lint
@@ -51,11 +51,11 @@ You can specify multiple rule directories and utility directories:
 
 ```yaml
 repos:
-  - repo: https://github.com/assignUser/cmake-linter
+  - repo: https://github.com/assignUser/ast-grep-cmake-precommit
     rev: <ref>
     hooks:
       - id: cmake-lint
-        args: [--rule-dirs, ./cmake-rules, ./shared-rules, --util-dirs, ./cmake-utils, --]
+        args: [--rule-dirs, ./cmake-rules, ./shared-rules, --util-dirs, ./cmake-utils, --, --color never]
 ```
 
 > [!IMPORTANT]  
