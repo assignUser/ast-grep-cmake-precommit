@@ -1,37 +1,15 @@
 # CMake Integration for ast-grep
 
-This repository provides CMake language support for [ast-grep](https://ast-grep.github.io/), enabling you to write custom linting rules for your CMake projects.
+This repository provides CMake as a custom language for [ast-grep](https://ast-grep.github.io/), enabling you to write custom linting rules for your CMake projects.
 
 ## Features
 
-- **Custom CMake Language Support**: Uses tree-sitter-cmake parser to enable ast-grep to understand CMake syntax
+- **Custom CMake Language Support**: Uses [tree-sitter-cmake](https://github.com/uyha/tree-sitter-cmake) parser to enable ast-grep to understand CMake syntax
 - **Flexible Rule System**: Bring your own rules - define linting rules using ast-grep's powerful pattern matching
-- **Pre-commit Hook Integration**: Can be used as a pre-commit hook in your CMake projects with your custom rules
+- **Pre-commit Hook**: The hook uses `node` providing maximum portability between OSes
 - **Example Rules**: Includes reference rules demonstrating common CMake linting patterns
 
-## Setup
-
-### Local Development and Testing
-
-For local development and testing:
-
-1. Install dependencies:
-   ```bash
-   npm install -g @ast-grep/cli tree-sitter-cli
-   ```
-
-2. Build the CMake parser:
-   ```bash
-   tree-sitter build tree-sitter-cmake/
-   ```
-
-3. Test with your own rules:
-   ```bash
-   # Test your rules directory
-   node scripts/cmake-scan.js --rule-dirs ./your-rules-dir -- your-cmake-files.txt
-   ```
-
-### Using as a Pre-commit Hook
+## Using as a Pre-commit Hook
 
 To use this CMake integration in your project as a pre-commit hook, you need to provide your own rules:
 
@@ -55,6 +33,7 @@ To use this CMake integration in your project as a pre-commit hook, you need to 
          - id: cmake-lint
            args: [--rule-dirs, ./cmake-rules, --]
    ```
+   When used through pre-commit ast-grep seems to leave behind ANSI Color codes on the command line. The only current fix seems to be to use `--color never` to suppress color completely.
 
 3. Install the hook:
    ```bash
@@ -79,11 +58,16 @@ repos:
         args: [--rule-dirs, ./cmake-rules, ./shared-rules, --util-dirs, ./cmake-utils, --]
 ```
 
-> **Important**: The `--` separator at the end of the args list is required. It marks the boundary between hook-specific arguments and ast-grep arguments, ensuring proper argument parsing. Always include `--` as the last argument.
+> [!IMPORTANT]  
+> The `--` separator at the end of the args-list is required. It marks the boundary between hook-specific arguments and ast-grep arguments, ensuring proper argument parsing. Always include `--` after your last directory argument, before any ast-grep arguments or as the last element, if you don't pass any direct arguments.
 
-## Usage
+### Local Development of the hook
 
-### Writing Your Own Rules
+For local development of the hook use `pre-commit try-repo path/to/repo cmake-lint` to confirm that the hook works as expected.
+You will need to add your args to `.pre-commit-hooks.yaml`, as `try-repo` does not support custom arguments.
+
+
+## Writing Your Own Rules
 
 Create rules in your project's rule directory. Example rule:
 
@@ -110,30 +94,13 @@ This repository includes example rules in the `rules/` directory that demonstrat
 
 These can serve as a starting point for your own rules.
 
-### Direct Usage with ast-grep
-
-Once you have the CMake parser built, you can also use ast-grep directly:
-
-```bash
-# Scan with your rule directory
-ast-grep scan -c sgconfig.yml --rule-dirs ./your-rules-dir
-
-# Use inline patterns for quick testing  
-ast-grep run -p 'cmake_minimum_required($$$)' -l cmake CMakeLists.txt
-```
-
-## File Support
+### File Support
 
 The linter recognizes these file patterns:
 - `*.cmake`
 - `**/CMakeLists.txt`
 
-## Contributing
-
-1. Follow conventional commits format
-2. Build the CMake parser: `tree-sitter build tree-sitter-cmake/`
-3. Run `pre-commit install && pre-commit run --all-files` before committing
-4. Test rules with `ast-grep test`
+`*.cmake.in` is not supported as it's not valid CMake that ast-grep can parse.
 
 ### Testing Your Rules
 
