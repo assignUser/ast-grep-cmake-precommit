@@ -2,7 +2,7 @@
 
 const { execFileSync } = require('child_process')
 const path = require('path')
-const yaml = require('js-yaml')
+const yaml = require('yaml')
 const fs = require('fs')
 
 const args = process.argv.slice(2)
@@ -43,7 +43,8 @@ const configPath = path.join(process.env['NODE_PATH'], 'ast-grep-cmake-precommit
 // Read or create config
 let config = {}
 try {
-	config = yaml.load(fs.readFileSync(configPath, 'utf8')) || {}
+	const configFile = fs.readFileSync(configPath, 'utf8')
+	config = yaml.parse(configFile) || {}
 } catch (error) {
 	console.error('Error reading YAML file:', error)
 	process.exit(1)
@@ -72,7 +73,7 @@ for (const dir of utilDirs) {
 }
 
 try {
-	fs.writeFileSync(configPath, yaml.dump(config))
+	fs.writeFileSync(configPath, yaml.stringify(config))
 } catch (error) {
 	console.error('Error writing config file:', error)
 	process.exit(1)
@@ -89,8 +90,9 @@ try {
 
 // Restore base config so different pre-commit users (repos) don't interfere with each other
 try {
-	fs.writeFileSync(configPath, yaml.dump(base_config))
+	fs.writeFileSync(configPath, yaml.stringify(base_config))
 } catch (restoreError) {
 	console.error('Error restoring original config file:', restoreError)
 }
+process.exit(exit_code)
 process.exit(exit_code)
