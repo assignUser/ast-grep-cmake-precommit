@@ -1,12 +1,12 @@
 # CMake Integration for ast-grep
 
-This repository provides CMake as a custom language for [ast-grep](https://ast-grep.github.io/), enabling you to write custom linting rules for your CMake projects.
+This project adds CMake support to [ast-grep](https://ast-grep.github.io/), letting you craft custom linting rules for your CMake projects.
 
 ## Features
 
-- **Custom CMake Language Support**: Uses [tree-sitter-cmake](https://github.com/uyha/tree-sitter-cmake) parser to enable ast-grep to understand CMake syntax
+- **Custom CMake Language Support**: Uses the well maintained [tree-sitter-cmake](https://github.com/uyha/tree-sitter-cmake) parser to allow ast-grep to understand CMake syntax
 - **Flexible Rule System**: Bring your own rules - define linting rules using ast-grep's powerful pattern matching
-- **Pre-commit Hook**: The hook uses `node` providing maximum portability between OSes
+- **Pre-commit Hook**: The hook uses `language: node`, providing maximum portability between OSes
 - **Example Rules**: Includes reference rules demonstrating common CMake linting patterns
 
 ## Using as a Pre-commit Hook
