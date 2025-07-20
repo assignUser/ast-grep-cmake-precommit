@@ -28,13 +28,31 @@ jobs:
         run: |
           tree-sitter build tree-sitter-cmake/
 
+      - name: Test rules
+        run: |
+          ast-grep test
+
       - name: Create test directory
+        env:
+          ref: ${{ github.sha }}
+          url: https://github.com/${{ github.repository}}
+          rules: ${{ github.workspace }}/rules
         run: |
           mkdir -p /tmp/test-cmake-project
           cd /tmp/test-cmake-project
           git init
           git config user.email "test@example.com"
           git config user.name "Test User"
+          cat > .pre-commit-config.yaml <<EOF
+            repos:
+              - repo: $url
+                rev: $ref
+                hooks:
+                  - id: cmake-lint
+                    args: [--rule-dirs, $rules, --]
+          EOF
+
+          cat .pre-commit-config.yaml
 
       - name: Create main.cpp for testing
         run: |
@@ -78,15 +96,11 @@ jobs:
           install(TARGETS main DESTINATION /usr/local/bin)
           EOF
 
-      - name: Test rules
-        run: |
-          ast-grep test
-
       - name: Test pre-commit hook integration
         run: |
           cd /tmp/test-cmake-project
           git add .
           git commit -m"Initial Commit"
-          pre-commit try-repo ${{ github.workspace }} cmake-lint --all-files
+          pre-commit run cmake-lint --all-files
           mv CMakeLists-failing.txt CMakeLists.txt
-          pre-commit try-repo ${{ github.workspace }} cmake-lint --all-files || exit 0 && exit 1
+          pre-commit run cmake-lint --all-files || exit 0 && exit 1
