@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
 id: no-hardcoded-absolute-paths
 message: Hard-coded absolute paths are not portable between operating systems or machines. Use relative paths or CMake variables like CMAKE_SOURCE_DIR, CMAKE_BINARY_DIR, CMAKE_INSTALL_PREFIX instead.
 severity: warning

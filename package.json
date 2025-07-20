@@ -1,16 +1,15 @@
 {
   "bin": {
-    "cmake-linter": "./scripts/cmake-linter.sh"
+    "cmake-scan": "./scripts/cmake-scan.js"
   },
   "dependencies": {
     "@ast-grep/cli": ">=0.38.7",
     "tree-sitter-cli": ">=0.25.8"
   },
-  "description": "Pre-commit hook for linting CMake with ast-grep",
-  "name": "cmake-linter-precommit",
+  "description": "Pre-commit hook to run `ast-grep scan` with CMake as a custom language",
+  "name": "ast-grep-cmake-precommit",
   "scripts": {
-    "install": "npx tree-sitter build ./tree-sitter-cmake/",
-    "lint": "cmake-linter"
+    "install": "npx tree-sitter build ./tree-sitter-cmake/"
   },
   "version": "0.0.1"
 }

@@ -6,8 +6,8 @@ utilDirs:
   - utils
 languageGlobs:
   cmake:
-    - "*.cmake"
-    - "**/CMakeLists.txt"
+    - '*.cmake'
+    - '**/CMakeLists.txt'
 customLanguages:
   cmake:
     libraryPath: cmake.so

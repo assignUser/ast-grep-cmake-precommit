@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
 id: cmake-minimum-version-info
 message: CMake minimum version should ideally be 3.15 or higher for access to modern CMake features and improved functionality.
 severity: info
