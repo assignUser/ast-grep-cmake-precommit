@@ -85,6 +85,8 @@ jobs:
       - name: Test pre-commit hook integration
         run: |
           cd /tmp/test-cmake-project
+          git add .
+          git commit -m"Initial Commit"
           pre-commit try-repo ${{ github.workspace }} cmake-lint --all-files
           mv CMakeLists-failing.txt CMakeLists.txt
           pre-commit try-repo ${{ github.workspace }} cmake-lint --all-files || exit 0 && exit 1
