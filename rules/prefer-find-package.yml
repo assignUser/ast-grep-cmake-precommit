@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
 id: prefer-find-package
 message: Use find_package() instead of manual library finding with find_path() and find_library(). Modern CMake prefers find_package for dependency management.
 severity: warning

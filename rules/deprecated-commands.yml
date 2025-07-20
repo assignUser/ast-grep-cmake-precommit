@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
 id: deprecated-commands
 message: This command is deprecated and should not be used in new code. See CMake documentation for modern alternatives.
 severity: error

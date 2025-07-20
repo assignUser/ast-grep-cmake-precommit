@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
 id: avoid-directory-wide-functions
 message: Avoid using directory-wide functions. Use target-specific alternatives instead (e.g., target_compile_definitions(), target_compile_options(), target_link_options(), target_include_directories()).
 severity: warning

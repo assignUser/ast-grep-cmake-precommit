@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
 id: cmake-minimum-version-error
 message: CMake minimum version should be at least 3.10. Versions below 3.10 have deprecated features that were removed in CMake 4.0.
 severity: error
