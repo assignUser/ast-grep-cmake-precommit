@@ -79,6 +79,8 @@ repos:
         args: [--rule-dirs, ./cmake-rules, ./shared-rules, --util-dirs, ./cmake-utils, --]
 ```
 
+> **Important**: The `--` separator at the end of the args list is required. It marks the boundary between hook-specific arguments and ast-grep arguments, ensuring proper argument parsing. Always include `--` as the last argument.
+
 ## Usage
 
 ### Writing Your Own Rules
