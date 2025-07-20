@@ -31,6 +31,10 @@ jobs:
       - name: Create test directory
         run: |
           mkdir -p /tmp/test-cmake-project
+          cd /tmp/test-cmake-project
+          git init
+          git config user.email "test@example.com"
+          git config user.name "Test User"
 
       - name: Create main.cpp for testing
         run: |
@@ -74,46 +78,13 @@ jobs:
           install(TARGETS main DESTINATION /usr/local/bin)
           EOF
 
-      - name: Test hook with passing file
+      - name: Test rules
         run: |
-          cd /tmp/test-cmake-project
-          # Test directly with ast-grep to verify the passing file passes
-          ast-grep scan -c ${{ github.workspace }}/sgconfig.yml CMakeLists.txt || exit 1
-          echo "✅ Passing file correctly passes linting"
-
-      - name: Test hook with failing file (expect failure)
-        run: |
-          cd /tmp/test-cmake-project
-          # Rename failing file to CMakeLists.txt for testing
-          mv CMakeLists-failing.txt CMakeLists.txt
-          # This should fail, so we expect a non-zero exit code
-          if ast-grep scan -c ${{ github.workspace }}/sgconfig.yml CMakeLists.txt; then
-            echo "❌ Failing file should have produced linting errors"
-            exit 1
-          else
-            echo "✅ Failing file correctly fails linting"
-          fi
+          ast-grep test
 
       - name: Test pre-commit hook integration
         run: |
           cd /tmp/test-cmake-project
-          git init
-          git config user.email "test@example.com"
-          git config user.name "Test User"
-          # Reset to passing file for pre-commit test
-          cat > CMakeLists.txt << 'EOF'
-          cmake_minimum_required(VERSION 3.16)
-          project(TestProject)
-          set(CMAKE_CXX_STANDARD 17)
-          find_package(Threads REQUIRED)
-          add_executable(main main.cpp)
-          target_link_libraries(main PRIVATE Threads::Threads)
-          install(TARGETS main DESTINATION bin)
-          EOF
-          git add .
-          git commit -m "Initial commit"
-
-          # Test with pre-commit try-repo
-          echo "Testing pre-commit hook with try-repo..."
           pre-commit try-repo ${{ github.workspace }} cmake-lint --all-files
-          echo "✅ Pre-commit hook test completed successfully"
+          mv CMakeLists-failing.txt CMakeLists.txt
+          pre-commit try-repo ${{ github.workspace }} cmake-lint --all-files || exit 0 && exit 1
