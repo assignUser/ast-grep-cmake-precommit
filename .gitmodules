@@ -1,0 +1,3 @@
+[submodule "tree-sitter-cmake"]
+	path = tree-sitter-cmake
+	url = https://github.com/uyha/tree-sitter-cmake
