@@ -11,6 +11,23 @@ snapshots:
       style: primary
       start: 34
       end: 77
+  ? |
+    target_link_libraries(myapp
+        math_utils
+        string_utils
+    )
+  : fixed: |
+      target_link_libraries(myapp PUBLIC math_utils
+      string_utils)
+    labels:
+    - source: |-
+        target_link_libraries(myapp
+            math_utils
+            string_utils
+        )
+      style: primary
+      start: 0
+      end: 61
   ? "target_link_libraries(myapp \n    math_utils\n    string_utils\n)\n"
   : fixed: |
       target_link_libraries(myapp PUBLIC math_utils)
@@ -28,6 +45,26 @@ snapshots:
       style: primary
       start: 0
       end: 36
+  ? |
+    target_link_libraries(myexe
+        lib1
+        lib2
+        lib3
+    )
+  : fixed: |
+      target_link_libraries(myexe PUBLIC lib1
+      lib2
+      lib3)
+    labels:
+    - source: |-
+        target_link_libraries(myexe
+            lib1
+            lib2
+            lib3
+        )
+      style: primary
+      start: 0
+      end: 56
   ? "target_link_libraries(myexe\n    lib1 \n    lib2 \n    lib3\n)"
   : fixed: target_link_libraries(myexe PUBLIC lib1)
     labels:
