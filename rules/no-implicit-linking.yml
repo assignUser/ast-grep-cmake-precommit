@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+id: no-implicit-linking
+message: "Always specify scope (PUBLIC, PRIVATE, or INTERFACE) in target_link_libraries to make dependencies explicit"
+severity: warning
+language: cmake
+rule:
+  all:
+    - pattern: target_link_libraries($TARGET $$$ARGS)
+    - not:
+        any:
+          - pattern: target_link_libraries($TARGET PUBLIC $$$)
+          - pattern: target_link_libraries($TARGET PRIVATE $$$)
+          - pattern: target_link_libraries($TARGET INTERFACE $$$)
+fix: target_link_libraries($TARGET PUBLIC $$$ARGS)
