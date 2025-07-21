@@ -1,0 +1,49 @@
+id: no-implicit-linking
+valid:
+  # These should NOT trigger the rule - explicit scopes are used
+  - |
+    target_link_libraries(myapp PRIVATE somelib)
+  - |
+    target_link_libraries(mylib PUBLIC
+        math_utils
+        string_utils
+    )
+  - |
+    target_link_libraries(myinterface INTERFACE
+        header_only_lib
+    )
+  - |
+    target_link_libraries(mytarget
+        PUBLIC publiclib
+        PRIVATE privatelib
+        INTERFACE interfacelib
+    )
+  - |
+    add_library(mylib STATIC src.cpp)
+    target_link_libraries(mylib
+        PUBLIC
+        ${CMAKE_REQUIRED_LIBRARIES}
+        PRIVATE
+        internal_lib
+    )
+
+invalid:
+  # These should trigger the rule - missing scope keywords
+  - |
+    target_link_libraries(myapp somelib)
+  - |
+    target_link_libraries(myapp
+        math_utils
+        string_utils
+    )
+  - |
+    target_link_libraries(mylibrary external_lib)
+  - |
+    add_library(mylib STATIC src.cpp)
+    target_link_libraries(mylib dependency_lib)
+  - |
+    target_link_libraries(myexe
+        lib1
+        lib2
+        lib3
+    )

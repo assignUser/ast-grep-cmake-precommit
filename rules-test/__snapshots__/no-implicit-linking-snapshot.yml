@@ -1,0 +1,46 @@
+id: no-implicit-linking
+snapshots:
+  ? |
+    add_library(mylib STATIC src.cpp)
+    target_link_libraries(mylib dependency_lib)
+  : fixed: |
+      add_library(mylib STATIC src.cpp)
+      target_link_libraries(mylib PUBLIC dependency_lib)
+    labels:
+    - source: target_link_libraries(mylib dependency_lib)
+      style: primary
+      start: 34
+      end: 77
+  ? "target_link_libraries(myapp \n    math_utils\n    string_utils\n)\n"
+  : fixed: |
+      target_link_libraries(myapp PUBLIC math_utils)
+    labels:
+    - source: "target_link_libraries(myapp \n    math_utils\n    string_utils\n)"
+      style: primary
+      start: 0
+      end: 62
+  ? |
+    target_link_libraries(myapp somelib)
+  : fixed: |
+      target_link_libraries(myapp PUBLIC somelib)
+    labels:
+    - source: target_link_libraries(myapp somelib)
+      style: primary
+      start: 0
+      end: 36
+  ? "target_link_libraries(myexe\n    lib1 \n    lib2 \n    lib3\n)"
+  : fixed: target_link_libraries(myexe PUBLIC lib1)
+    labels:
+    - source: "target_link_libraries(myexe\n    lib1 \n    lib2 \n    lib3\n)"
+      style: primary
+      start: 0
+      end: 58
+  ? |
+    target_link_libraries(mylibrary external_lib)
+  : fixed: |
+      target_link_libraries(mylibrary PUBLIC external_lib)
+    labels:
+    - source: target_link_libraries(mylibrary external_lib)
+      style: primary
+      start: 0
+      end: 45
