@@ -1,0 +1,133 @@
+id: use-bare-variable-in-if
+snapshots:
+  ? |
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+      message("Using GCC")
+    endif()
+  : labels:
+    - source: if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+      style: primary
+      start: 0
+      end: 45
+    - source: '"${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU"'
+      style: secondary
+      start: 3
+      end: 44
+  ? |
+    if(${AN_OPTION})
+      message("Option is set")
+    endif()
+  : labels:
+    - source: if(${AN_OPTION})
+      style: primary
+      start: 0
+      end: 16
+    - source: ${AN_OPTION}
+      style: secondary
+      start: 3
+      end: 15
+  ? |
+    if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
+      message("Debug build")
+    endif()
+  : labels:
+    - source: if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
+      style: primary
+      start: 0
+      end: 39
+    - source: ${CMAKE_BUILD_TYPE} MATCHES "Debug"
+      style: secondary
+      start: 3
+      end: 38
+  ? |
+    if(${CMAKE_GENERATOR} STREQUAL "Ninja")
+      message("Using Ninja")
+    endif()
+  : labels:
+    - source: if(${CMAKE_GENERATOR} STREQUAL "Ninja")
+      style: primary
+      start: 0
+      end: 39
+    - source: ${CMAKE_GENERATOR} STREQUAL "Ninja"
+      style: secondary
+      start: 3
+      end: 38
+  ? |-
+    if(${ENABLE_FEATURE})
+      # Simple boolean check
+      message("Feature enabled")
+    endif()
+  : labels:
+    - source: if(${ENABLE_FEATURE})
+      style: primary
+      start: 0
+      end: 21
+    - source: ${ENABLE_FEATURE}
+      style: secondary
+      start: 3
+      end: 20
+  ? |
+    if(${OPTION} STREQUAL "ON")
+      message("Option is ON")
+    endif()
+  : labels:
+    - source: if(${OPTION} STREQUAL "ON")
+      style: primary
+      start: 0
+      end: 27
+    - source: ${OPTION} STREQUAL "ON"
+      style: secondary
+      start: 3
+      end: 26
+  ? |
+    if(${PROJECT_VERSION} VERSION_GREATER "1.0")
+      message("Version greater than 1.0")
+    endif()
+  : labels:
+    - source: if(${PROJECT_VERSION} VERSION_GREATER "1.0")
+      style: primary
+      start: 0
+      end: 44
+    - source: ${PROJECT_VERSION} VERSION_GREATER "1.0"
+      style: secondary
+      start: 3
+      end: 43
+  ? |
+    if(${VAR} AND ${OTHER_VAR})
+      message("Both set")
+    endif()
+  : labels:
+    - source: if(${VAR} AND ${OTHER_VAR})
+      style: primary
+      start: 0
+      end: 27
+    - source: ${VAR} AND ${OTHER_VAR}
+      style: secondary
+      start: 3
+      end: 26
+  ? |
+    if(${VAR} OR OTHER_VAR)
+      message("At least one set")
+    endif()
+  : labels:
+    - source: if(${VAR} OR OTHER_VAR)
+      style: primary
+      start: 0
+      end: 23
+    - source: ${VAR} OR OTHER_VAR
+      style: secondary
+      start: 3
+      end: 22
+  ? |
+    if(NOT ${BUILD_TESTING})
+      message("Testing disabled")
+    endif()
+  : labels:
+    - source: if(NOT ${BUILD_TESTING})
+      style: primary
+      start: 0
+      end: 24
+    - source: NOT ${BUILD_TESTING}
+      style: secondary
+      start: 3
+      end: 23
