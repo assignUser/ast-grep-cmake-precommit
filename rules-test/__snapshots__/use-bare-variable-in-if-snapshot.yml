@@ -52,7 +52,7 @@ snapshots:
       style: secondary
       start: 3
       end: 38
-  ? |-
+  ? |
     if(${ENABLE_FEATURE})
       # Simple boolean check
       message("Feature enabled")
