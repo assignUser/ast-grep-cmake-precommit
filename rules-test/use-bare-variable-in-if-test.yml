@@ -1,0 +1,125 @@
+id: use-bare-variable-in-if
+valid:
+  # These should NOT trigger the rule - bare variable names (preferred)
+  - |
+    if(AN_OPTION)
+      message("Option is set")
+    endif()
+  - |
+    if(CMAKE_GENERATOR STREQUAL "Ninja")
+      message("Using Ninja")
+    endif()
+  - |
+    if(NOT BUILD_TESTING)
+      message("Testing disabled")
+    endif()
+  - |
+    if(VAR AND OTHER_VAR)
+      message("Both set")
+    endif()
+  - |
+    if(VAR OR OTHER_VAR)
+      message("At least one set")
+    endif()
+  - |
+    if(CMAKE_BUILD_TYPE MATCHES "Debug")
+      message("Debug build")
+    endif()
+
+  # These should NOT trigger the rule - commands that require variable expansion
+  - |
+    if(EXISTS ${CMAKE_BINARY_DIR}/config.h)
+      message("Config exists")
+    endif()
+  - |
+    if(IS_DIRECTORY ${CMAKE_SOURCE_DIR}/external)
+      message("External dir exists")
+    endif()
+  - |
+    if(IS_SYMLINK ${CMAKE_CURRENT_BINARY_DIR}/link)
+      message("Link exists")
+    endif()
+  - |
+    if(IS_ABSOLUTE ${PATH_VAR})
+      message("Absolute path")
+    endif()
+  - |
+    if(DEFINED ${CACHE_VAR})
+      message("Cache var defined")
+    endif()
+  - |
+    if(COMMAND ${CMD_VAR})
+      message("Command exists")
+    endif()
+  - |
+    if(POLICY ${POLICY_VAR})
+      message("Policy exists")
+    endif()
+  - |
+    if(TARGET ${TARGET_VAR})
+      message("Target exists")
+    endif()
+  - |
+    if(TEST ${TEST_VAR})
+      message("Test exists")
+    endif()
+  - |
+    if(NOT EXISTS ${FILE_PATH})
+      message("File doesn't exist")
+    endif()
+  - |
+    if(NOT IS_DIRECTORY ${DIR_PATH})
+      message("Not a directory")
+    endif()
+  - |
+    if(NOT DEFINED ${VAR_NAME})
+      message("Variable not defined")
+    endif()
+  - |
+    if(NOT TARGET ${TARGET_NAME})
+      message("Target doesn't exist")
+    endif()
+
+invalid:
+  # These should trigger the rule - using ${} where bare variable names should be used
+  - |
+    if(${AN_OPTION})
+      message("Option is set")
+    endif()
+  - |
+    if(${CMAKE_GENERATOR} STREQUAL "Ninja")
+      message("Using Ninja")
+    endif()
+  - |
+    if(NOT ${BUILD_TESTING})
+      message("Testing disabled")
+    endif()
+  - |
+    if(${VAR} AND ${OTHER_VAR})
+      message("Both set")
+    endif()
+  - |
+    if(${VAR} OR OTHER_VAR)
+      message("At least one set")
+    endif()
+  - |
+    if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
+      message("Debug build")
+    endif()
+  - |
+    if(${OPTION} STREQUAL "ON")
+      message("Option is ON")
+    endif()
+  - |
+    if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "GNU")
+      message("Using GCC")
+    endif()
+  - |
+    if(${PROJECT_VERSION} VERSION_GREATER "1.0")
+      message("Version greater than 1.0")
+    endif()
+  - |
+    if(${ENABLE_FEATURE})
+      # Simple boolean check
+      message("Feature enabled")
+    endif()

@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/ast-grep/ast-grep/main/schemas/rule.json
+id: use-bare-variable-in-if
+message: Use bare variable name in if() instead of ${variable} expansion where applicable
+severity: warning
+language: cmake
+utils:
+  # Commands that require variable expansion and should be excluded
+  requires-expansion: &requires-expansion
+    any:
+      - pattern: if(EXISTS $$$)
+      - pattern: if(IS_DIRECTORY $$$)
+      - pattern: if(IS_SYMLINK $$$)
+      - pattern: if(IS_ABSOLUTE $$$)
+      - pattern: if(DEFINED $$$)
+      - pattern: if(COMMAND $$$)
+      - pattern: if(POLICY $$$)
+      - pattern: if(TARGET $$$)
+      - pattern: if(TEST $$$)
+      - pattern: if(NOT EXISTS $$$)
+      - pattern: if(NOT IS_DIRECTORY $$$)
+      - pattern: if(NOT IS_SYMLINK $$$)
+      - pattern: if(NOT IS_ABSOLUTE $$$)
+      - pattern: if(NOT DEFINED $$$)
+      - pattern: if(NOT COMMAND $$$)
+      - pattern: if(NOT POLICY $$$)
+      - pattern: if(NOT TARGET $$$)
+      - pattern: if(NOT TEST $$$)
+rule:
+  all:
+    # Match if statements that contain variable references
+    - pattern: if($$$)
+    - has:
+        regex: '\$\{[^}]+\}'
+    # Exclude commands that require variable expansion
+    - not: *requires-expansion
